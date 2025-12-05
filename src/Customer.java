@@ -1,13 +1,13 @@
 /**
  *
  */
-public class Customer {
+public class Customer extends Person {
 
 
     private String afm;
-    private String name;
-    private String surname;
-    private String number;
+    private String name;     // vgale to gt to exeis sthn super class
+    private String surname;   // vgale to gt to exeis sthn super class
+    private String number;      // vgale to gt to exeis sthn super class
     private String email;
 
     /**

@@ -1,7 +1,7 @@
 /**
  *
  */
-public class Employees {
+public class Employees extends Person {
 
     private String employeeName ;
     private String employeeSurname;
