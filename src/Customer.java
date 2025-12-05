@@ -5,27 +5,11 @@ public class Customer extends Person {
 
 
     private String afm;
-    private String name;     // vgale to gt to exeis sthn super class
-    private String surname;   // vgale to gt to exeis sthn super class
     private String number;      // vgale to gt to exeis sthn super class
-    private String email;
 
-    /**
-     * gets the surname
-     * @return returns the surname
-     */
-     public String getSurname(){
-         return surname;
-     }
 
-    /**
-     * sets the surname
-     * @param surname the surname
-     */
-     public void setSurname(String surname)
-     {
-         this.surname=surname;
-     }
+
+
 
 
     /**
@@ -36,32 +20,12 @@ public class Customer extends Person {
         return afm;
     }
 
-    /** returns the  name of the customer
-     *
-     * @return the  name
-     */
 
-    public String getname() {
-        return name;
-    }
-
-    /**
-     * returns the phone number of the customer
-     * @return the number
-     */
     public String getNumber() {
 
         return number;
     }
 
-    /**
-     *  returns the email of the customer
-     * @return the email
-     */
-    public String getEmail() {
-
-        return email;
-    }
 
     /**
      * sets the afm of the customer
@@ -71,13 +35,7 @@ public class Customer extends Person {
         this.afm = afm;
     }
 
-    /**
-     * sets the full name of the customer
-     * @param name the new full name
-     */
-    public void setname(String name) {
-        this.name = name;
-    }
+
 
     /**
      * sets the  phone number of the customer
@@ -109,13 +67,10 @@ public class Customer extends Person {
     public Customer(String afm, String name, String surname , String number,String email)
 {   if (surname!=null) surname=surname.trim();
     if (afm != null) afm = afm.trim();
-    if (name != null) name = name.trim();
-    if (number != null) number = number.trim();
-    if (email != null) email = email.trim();
 
-    if(surname== null || surname.isEmpty())  throw new IllegalArgumentException(("invalid sirname"));
-    if (name==null || name.isEmpty()) throw new IllegalArgumentException("invalid  name ");
-    if( email==null || !(email.contains("@"))) throw new IllegalArgumentException("invalid email");
+
+
+
     if ( afm==null || !(afm.matches("\\d{9}"))) throw new IllegalArgumentException(" invalid afm, it  has to be 9 digits");
     if (number==null || number.isEmpty()) throw new IllegalArgumentException("invalid phone number");
     this.afm=afm;
