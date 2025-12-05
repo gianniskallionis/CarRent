@@ -89,6 +89,33 @@ public class Employees {
      this.employeeSurname=employeeSurname;
  }
 
+    /**
+     * A constructor who trims the first spaces so that the entry is smooth, checks if the strings are null or empty to ensure correct entries then sets
+     * the variables with the given inputs.
+     * @param employeeName the name of the employee
+     * @param employeeSurname the surname of the employee
+     * @param  username the username the employee uses to login
+     * @param  password the password the employee uses to login
+     * @param  employeeEmail the email of the employee
+     * @throws IllegalArgumentException the error if any input is invalid
+     *
+     *
+     */
+    @SuppressWarnings("ReassignedVariable")
+    public Employees(String employeeName, String employeeSurname , String username, String password , String employeeEmail )
+    {
+       if  (employeeName!= null) employeeName=employeeName.trim();
+       if (employeeSurname !=null) employeeSurname=employeeSurname.trim();
+       if (username!=null) username=username.trim();
+       if (password !=null) password=password.trim();
+       if (employeeEmail!=null)  employeeEmail=employeeEmail.trim();
+
+       if (employeeName==null || employeeName.isEmpty()) throw new IllegalArgumentException("invalid employee name");
+       if (employeeSurname==null ||employeeSurname.isEmpty()) throw new IllegalArgumentException("invalid employee surname");
+       if (username==null || username.isEmpty()) throw new IllegalArgumentException("invalid username");
+       if (password==null || password.isEmpty()) throw new IllegalArgumentException("invalid password ");
+       if (employeeEmail == null || !employeeEmail.contains("@")) throw new IllegalArgumentException("invalid email");
+    }
 
 
 
