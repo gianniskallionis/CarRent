@@ -5,12 +5,7 @@ public class Customer extends Person {
 
 
     private String afm;
-    private String number;      // vgale to gt to exeis sthn super class
-
-
-
-
-
+    private String number;
 
     /**
      * returns the Afm of the Customer
@@ -20,13 +15,6 @@ public class Customer extends Person {
         return afm;
     }
 
-
-    public String getNumber() {
-
-        return number;
-    }
-
-
     /**
      * sets the afm of the customer
      * @param afm the new afm
@@ -35,7 +23,13 @@ public class Customer extends Person {
         this.afm = afm;
     }
 
-
+    /** gets the number
+     *
+     * @return the number
+     */
+    public String getNumber() {
+        return number;
+    }
 
     /**
      * sets the  phone number of the customer
@@ -43,14 +37,6 @@ public class Customer extends Person {
      */
     public void setNumber(String number) {
         this.number = number;
-    }
-
-    /**
-     * sets the email of the customer
-     * @param email the new email
-     */
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     /**
@@ -64,20 +50,16 @@ public class Customer extends Person {
      */
 
     @SuppressWarnings({"AssignmentToMethodParameter", "ReassignedVariable"})
-    public Customer(String afm, String name, String surname , String number,String email)
-{   if (surname!=null) surname=surname.trim();
-    if (afm != null) afm = afm.trim();
-
-
-
+    public Customer(String afm, String name, String surname , String number,String email){
+    super(name, surname, email);
+ if (surname!=null) surname=surname.trim();
+ if (afm != null) afm = afm.trim();
 
     if ( afm==null || !(afm.matches("\\d{9}"))) throw new IllegalArgumentException(" invalid afm, it  has to be 9 digits");
     if (number==null || number.isEmpty()) throw new IllegalArgumentException("invalid phone number");
     this.afm=afm;
-    this.name=name;
-    this.surname=surname;
     this.number=number;
-    this.email=email;
+
 }
 
 
