@@ -63,7 +63,8 @@ public class Employees extends Person {
 
        if (username==null || username.isEmpty()) throw new IllegalArgumentException("invalid username");
        if (password==null || password.isEmpty()) throw new IllegalArgumentException("invalid password ");
-
+       this.username=username;
+       this.password=password;
     }
 
 
