@@ -10,8 +10,8 @@ import java.util.HashMap;
  * @since 2025
  */
 public class UserService {
-    HashMap<String,Employees> logins ;
-Employees currentUser;
+    HashMap<String,Employee> logins ;
+Employee currentUser;
 
 
 
@@ -28,7 +28,7 @@ Employees currentUser;
      * @param emp1 the instance of the employee addUser is trying to add to the hashmap
      * @return if it returns true the attempt was fruitful otherwise it was futile.
      */
-    public boolean  addUser(Employees emp1)
+    public boolean  addUser(Employee emp1)
     {
         if ( emp1==null || emp1.getUsername()==null ||emp1.getUsername().trim().isEmpty())
         {return false;}
@@ -49,7 +49,7 @@ Employees currentUser;
      * @param emp1 the instance of Employees that is being given as an argument
      * @return if the method was successful it returns true. otherwise it returns false
      */
-    public boolean deleteUser(Employees emp1)
+    public boolean deleteUser(Employee emp1)
     { if (emp1==null) return false;
         if (searchByEmail(emp1.getEmail() ) !=  null   && searchByUsername(emp1.getUsername()) !=null )
     {logins.remove(emp1.getUsername().trim().toLowerCase());
@@ -84,7 +84,7 @@ wrong_password;
      * @return if the return is wrong username  then it means there is an error concerning the username. same with the wrong password
      * if the return status is success then  all went well
      */
-    public loginStatus loginUser(Employees emp1) {
+    public loginStatus loginUser(Employee emp1) {
         if ( emp1==null || searchByUsername(emp1.getUsername()) == null)
         {currentUser=null;
 return loginStatus.wrong_username;   }// failsafe gia an einai valid to username
@@ -103,7 +103,7 @@ return loginStatus.success;
      * @param emp1
      * @return
      */
-    public boolean logoutUser(Employees emp1){
+    public boolean logoutUser(Employee emp1){
 if (currentUser!=null) // an egine me epityxia login tote currentuser=oxi null
 {
 currentUser=null;
@@ -118,11 +118,11 @@ return true;}// etsi kanw logout;
 
 
 
-    public Employees searchByEmail(String email1)
+    public Employee searchByEmail(String email1)
 {
     if (email1==null || email1.isEmpty() ) return null;
     String t2= email1.trim().toLowerCase();
-    for (Employees x:logins.values()) // kanei iterate olo to hashmap logins<username,Employees>
+    for (Employee x:logins.values()) // kanei iterate olo to hashmap logins<username,Employees>
     {
         if(x.getEmail()== null ) continue; // αν το email toy stoixeiou tou logins == null, proxwraei ston epomeno
         String t1=  x.getEmail().trim().toLowerCase();
@@ -133,11 +133,11 @@ return true;}// etsi kanw logout;
 }
 
 
-    public Employees searchByUsername(String username1)
+    public Employee searchByUsername(String username1)
 {
     if (username1==null || username1.isEmpty() ) return null;
     String t2= username1.trim().toLowerCase();
-    for ( Employees x:logins.values()) // kanei iterate olo to hashmap logins<username,Employees>
+    for ( Employee x:logins.values()) // kanei iterate olo to hashmap logins<username,Employees>
     {
         if(x== null || x.getUsername()==null) continue; // αν το email toy stoixeiou tou logins == null, proxwraei ston epomeno
         String t1=  x.getUsername().trim().toLowerCase();

@@ -1,7 +1,9 @@
+import java.util.Objects;
+
 /**
  *
  */
-public class Employees extends Person {
+public class Employee extends Person {
 
 
     private String username;
@@ -66,9 +68,28 @@ public class Employees extends Person {
        setPassword((password));
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null ) return false;
+        if (this == obj) return true;     // if compared to oneself
 
+        if (!(obj instanceof Employee)) return false; // if it is not a customer object it cant be equal
 
+        Employee employeeTemp = (Employee) obj;
+        if(this.username==null ||employeeTemp.username==null) return false;
+        return (Objects.equals(this.username.toLowerCase(), employeeTemp.username.toLowerCase()));
+    }
 
+    @Override
+    public int hashCode() {
+        if (username==null) return 0;
+        return Objects.hash(username.toLowerCase());
+    }
+
+    public String toString() {
+        return String.format("Employee [ username= %s, name= %s,surname=  %s, email = %s ]",
+                                     getUsername() ,getName(),getSurname(),getEmail()       );
+    }
 
 
 
