@@ -24,21 +24,24 @@ public abstract  class Person {
      * @param name , the name
      */
     public void setName(String name) {
-        this.name = name;
+        if (name==null) throw new IllegalArgumentException("null  name ");
+        if (name.trim().isEmpty() ) throw new IllegalArgumentException(("name is empty") );
+
+        this.name = name.trim();
     }
     /**
      * gets the surname
      * @return the surname
      */
-    public String getSurname() {
-        return surname;
-    }
+    public String getSurname() {return surname;}
     /**
      * sets the surname
      * @param surname is the surname
      */
     public void setSurname(String surname) {
-        this.surname = surname;
+        if (surname==null) throw new IllegalArgumentException("null  surname ");
+        if (surname.trim().isEmpty() ) throw new IllegalArgumentException(("surname is empty") );
+        this.surname = surname.trim();
     }
     /**
      * gets the email
@@ -52,7 +55,11 @@ public abstract  class Person {
      * @param email the email
      */
     public void setEmail(String email) {
-        this.email = email;
+        if( email==null ) throw new IllegalArgumentException("null email");
+        if (!email.trim().contains("@")  ) throw new IllegalArgumentException( ("email must contain @") );
+        if (email.trim().length()<3 ) throw new IllegalArgumentException(("email must  contain at least  a character before and after @  "));
+
+        this.email = email.trim();
     }
 
     /** Constructor that sets the fields of the class
@@ -63,19 +70,11 @@ public abstract  class Person {
      *
      *
      */
-    @SuppressWarnings({"AssignmentToMethodParameter", "ReassignedVariable"})
+    @SuppressWarnings({"AssignmentToMethodParameter"})
     public Person(String name, String surname, String email) {
-        if (name != null) name = name.trim();
-        if (surname != null) surname = surname.trim();
-        if (email != null) email = email.trim();
-
-        if (name==null || name.isEmpty()) throw new IllegalArgumentException("invalid  name ");
-        if(surname== null || surname.isEmpty())  throw new IllegalArgumentException(("invalid surname"));
-        if( email==null || !(email.contains("@"))) throw new IllegalArgumentException("invalid email");
-
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
+       setName((name));
+       setSurname((surname));
+       setEmail(email);
     }
 
 
