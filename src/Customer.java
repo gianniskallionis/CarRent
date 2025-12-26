@@ -11,6 +11,7 @@ public class Customer extends Person {
 
     /**
      * returns the Afm of the Customer
+     *
      * @return the Afm
      */
     public String getAfm() {
@@ -19,13 +20,18 @@ public class Customer extends Person {
 
     /**
      * sets the afm of the customer
+     *
      * @param afm the new afm
      */
     public void setAfm(String afm) {
-        this.afm = afm;
+        if (afm == null) throw new IllegalArgumentException(("afm is null, it does not exist "));
+        if (!afm.trim().matches("\\d{9}"))
+            throw new IllegalArgumentException(("Afm is not 9 digits ")); // if not 9 digits trimmed, throw exception.
+        this.afm = afm.trim();
     }
 
-    /** gets the number
+    /**
+     * gets the number
      *
      * @return the number
      */
@@ -34,80 +40,80 @@ public class Customer extends Person {
     }
 
     /**
-     * sets the  phone number of the customer
+     * sets the  phone number of the customer after checking wether the parameter is null or an empty string
+     *
      * @param number the new number
      */
     public void setNumber(String number) {
-        this.number = number;
+        if (number == null) throw new IllegalArgumentException(" phone number is null,it  does not exist ");
+        if (!number.trim().matches("\\d{5,}"))
+            throw new IllegalArgumentException("object number must be over 5 digits");
+        this.number = number.trim();
     }
-
-
-
-
 
 
     /**
      * creates a new object of type : customer and throws an error if any data entry is wrong ,it also trims any spaces that may occur in the start
-     * @param afm the afm of the customer
-     * @param name the full name of the customer
-     * @param number   the number of the customer
-     * @param email     the email of the customer
+     * through the setters
+     *
+     * @param afm     the afm of the customer
+     * @param name    the full name of the customer
+     * @param number  the number of the customer
+     * @param email   the email of the customer
      * @param surname the surname of the customer
      * @throws IllegalArgumentException if any argument is invalid
      */
 
-    @SuppressWarnings({"AssignmentToMethodParameter", "ReassignedVariable"})
-    public Customer(String afm, String name, String surname , String number,String email){
-    super(name, surname, email);
- if (afm != null) afm = afm.trim();
- if (number!=null) number=number.trim();
-    if ( afm==null || !(afm.matches("\\d{9}"))) throw new IllegalArgumentException(" invalid afm, it  has to be 9 digits");
-    if (number==null || number.isEmpty()) throw new IllegalArgumentException("invalid phone number");
-    this.afm=afm;
-    this.number=number;
-
-}
+    @SuppressWarnings({"AssignmentToMethodParameter"})
+    public Customer(String afm, String name, String surname, String number, String email) {
+        super(name, surname, email);
+        setAfm(afm);
+        setNumber(number);
+    }
 
     /**
      * overrides of the equals method so i can compare 2 objects
-     * @param obj   the reference object with which to compare.
+     *
+     * @param obj the reference object with which to compare.
      * @return true if the 2 objects being compared are equal
      */
-    public boolean equals(Object obj){
-  if (this== obj) return true;     // if compared to oneself
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;     // if compared to oneself
 
-  if (!(obj instanceof Customer)) return false; // if it is not a customer object it cant be equal
+        if (!(obj instanceof Customer)) return false; // if it is not a customer object it cant be equal
 
         Customer customerTemp = (Customer) obj;
-        return (Objects.equals(this.afm, customerTemp.afm));  }
+        return (Objects.equals(this.afm, customerTemp.afm));
+    }
 
     /**
      * overrides the hashcode so every object that is equal has the same hashcode    z
+     *
      * @return the hashcode using the field afm to calculate it
      */
-    public int hashcode(){
+
+    @Override
+    public int hashCode() {
         return Objects.hash(afm);
-}
+    }
 
-public String toString (){
-        return "name:" +getName() +
-                "surname:" +getSurname()+
-                "email:" +getEmail()+
-                "afm:" +getAfm()+
-                "number:" +getNumber();}
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public String toString() {
+        return String.format("Customer [name= %s, Surname= %s, email= %s, Afm= %s, phone=%s ]",
+                getName(), getSurname(), getEmail(), getAfm(), getNumber());
+    }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

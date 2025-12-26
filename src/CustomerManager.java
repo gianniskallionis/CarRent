@@ -59,7 +59,7 @@ public class CustomerManager {
      */
     public Customer searchByAfm(String afm){
         for (Customer x:customersList)
-        {if(x.getAfm().equals(afm))
+        {if(x.getAfm()                   .equals(afm.trim()))
                 return x;}
         return null;}
 
