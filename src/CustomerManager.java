@@ -58,8 +58,10 @@ public class CustomerManager {
      * @return
      */
     public Customer searchByAfm(String afm){
+        if(afm==null ) return null;
+
         for (Customer x:customersList)
-        {if(x.getAfm()                   .equals(afm.trim()))
+        {if(x.getAfm().trim()                   .equals(afm.trim()))
                 return x;}
         return null;}
 
@@ -71,6 +73,8 @@ public class CustomerManager {
      */
     public  Customer searchByName (String name, String surname)
     {
+        if(name==null || surname==null) return null;
+
         for (Customer x:customersList)
         {
             if(   (x.getName().trim()).equals(name.trim()) && (x.getSurname().trim()).equals(surname.trim())    )
@@ -83,6 +87,7 @@ public class CustomerManager {
      * @return
      */
  public Customer searchByNumber(String number){
+     if (number==null) return null;
      for (Customer x:customersList)
      {if(x.getNumber().equals(number))
          return x;}

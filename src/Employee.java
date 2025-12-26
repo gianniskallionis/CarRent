@@ -21,7 +21,9 @@ public class Employees extends Person {
      * @param username the username
      */
     public void setUsername(String username) {
-        this.username = username;
+        if(username==null) throw new IllegalArgumentException(("null username"));
+        if (username.isEmpty() ) throw new IllegalArgumentException("username is empty;");
+        this.username = username.trim();
     }
 
 
@@ -38,7 +40,9 @@ public class Employees extends Person {
      * @param password the password
      */
     public void setPassword(String password) {
-        this.password = password;
+        if(password==null) throw new IllegalArgumentException(("null password"));
+        if (password.isEmpty() ) throw new IllegalArgumentException("password is empty;");
+        this.password = password.trim();
     }
 
 
@@ -55,16 +59,11 @@ public class Employees extends Person {
      *
      */
     @SuppressWarnings("ReassignedVariable")
-    public Employees(String name, String surname , String username, String password , String email )
+    public Employee(String name, String surname , String username, String password , String email )
     {
        super(name,surname,email);
-       if (username!=null) username=username.trim();
-       if (password !=null) password=password.trim();
-
-       if (username==null || username.isEmpty()) throw new IllegalArgumentException("invalid username");
-       if (password==null || password.isEmpty()) throw new IllegalArgumentException("invalid password ");
-       this.username=username;
-       this.password=password;
+      setUsername((username));
+       setPassword((password));
     }
 
 
