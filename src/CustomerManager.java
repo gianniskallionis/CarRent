@@ -89,11 +89,34 @@ public class CustomerManager {
  public Customer searchByNumber(String number){
      if (number==null) return null;
      for (Customer x:customersList)
-     {if(x.getNumber().equals(number))
+     {if(x.getNumber().trim()     .equals(number.trim()))
          return x;}
      return null;}
 
 
+    /**
+     *
+     * @param afm
+     * @return
+     */
+    public boolean deleteCustomer(String afm) {
+        Customer customer1 = searchByAfm(afm);
+        if (customer1 != null) {
+            customersList.remove(customer1);
+            return true;
+        } return false;
+
+
+
+
+    /**
+     * Returns a list of all customers.
+     *
+     * @return a copy of the customer list
+     */
+    public ArrayList<Customer> getAllCustomers() {
+        return new ArrayList<>(customersList);
+    }
 
 
 
