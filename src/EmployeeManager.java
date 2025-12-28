@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 /**
- * userService
+ * EmployeeManager
  * <p>
  * the log in and other stuff happen here
  *
@@ -9,16 +9,14 @@ import java.util.HashMap;
  * @version 06-Dec-25
  * @since 2025
  */
-public class UserService {
-    HashMap<String,Employee> logins ;
+public class EmployeeManager {
+    HashMap<String,Employee> employeesByUsername;
 Employee currentUser;
 
 
 
-    
-
-    public UserService() {
-        logins = new HashMap<>();
+    public EmployeeManager() {
+        employeesByUsername = new HashMap<>();
     }
 
     /**
@@ -35,7 +33,7 @@ Employee currentUser;
 
             if (  searchByEmail(emp1.getEmail() ) ==  null   && searchByUsername(emp1.getUsername()) ==null     ) // an ==null den yparxei to email ,username ara mporw add
             {
-                logins.put(emp1.getUsername().trim().toLowerCase(),emp1); // prosthetw ton emp1 sto hashmap
+                employeesByUsername.put(emp1.getUsername().trim().toLowerCase(),emp1); // prosthetw ton emp1 sto hashmap
                 return true;
             }
             else return false;
@@ -49,12 +47,14 @@ Employee currentUser;
      * @param emp1 the instance of Employees that is being given as an argument
      * @return if the method was successful it returns true. otherwise it returns false
      */
-    public boolean deleteUser(Employee emp1)
-    { if (emp1==null) return false;
-        if (searchByEmail(emp1.getEmail() ) !=  null   && searchByUsername(emp1.getUsername()) !=null )
-    {logins.remove(emp1.getUsername().trim().toLowerCase());
-        return true;}  // all went well
-  return false;} // smth went wrong
+    public boolean deleteUser(Employee emp1) {
+        if (emp1 == null || emp1.getUsername() == null) return false;
+        if (employeesByUsername.containsKey(emp1.getUsername().trim().toLowerCase())) {
+            employeesByUsername.remove(emp1.getUsername().trim().toLowerCase());
+            return true;
+        }
+        return false;
+    }
 
     /**an enumeration used to explain the reason if loginUser can not log in the user
      *
@@ -90,20 +90,20 @@ wrong_password;
 return loginStatus.wrong_username;   }// failsafe gia an einai valid to username
 
         String key=emp1.getUsername().trim().toLowerCase();
-if (  logins.get(key)==null ||logins.get(key).getPassword() ==null || emp1.getPassword()==null || ! logins.get(key).getPassword().equals(emp1.getPassword())  )  // lathos kwdikos
+if (  employeesByUsername.get(key)==null ||employeesByUsername.get(key).getPassword() ==null || emp1.getPassword()==null || ! employeesByUsername.get(key).getPassword().equals(emp1.getPassword())  )  // lathos kwdikos
 {currentUser=null;
     return loginStatus.wrong_password;}
-currentUser=logins.get(key);
+currentUser=employeesByUsername.get(key);
 return loginStatus.success;
 }
 
 
     /**
      *
-     * @param emp1
+     *
      * @return
      */
-    public boolean logoutUser(Employee emp1){
+    public boolean logoutUser(){
 if (currentUser!=null) // an egine me epityxia login tote currentuser=oxi null
 {
 currentUser=null;
@@ -122,7 +122,7 @@ return true;}// etsi kanw logout;
 {
     if (email1==null || email1.isEmpty() ) return null;
     String t2= email1.trim().toLowerCase();
-    for (Employee x:logins.values()) // kanei iterate olo to hashmap logins<username,Employees>
+    for (Employee x:employeesByUsername.values()) // kanei iterate olo to hashmap logins<username,Employees>
     {
         if(x.getEmail()== null ) continue; // αν το email toy stoixeiou tou logins == null, proxwraei ston epomeno
         String t1=  x.getEmail().trim().toLowerCase();
@@ -133,20 +133,16 @@ return true;}// etsi kanw logout;
 }
 
 
-    public Employee searchByUsername(String username1)
-{
-    if (username1==null || username1.isEmpty() ) return null;
-    String t2= username1.trim().toLowerCase();
-    for ( Employee x:logins.values()) // kanei iterate olo to hashmap logins<username,Employees>
-    {
-        if(x== null || x.getUsername()==null) continue; // αν το email toy stoixeiou tou logins == null, proxwraei ston epomeno
-        String t1=  x.getUsername().trim().toLowerCase();
-        if (t1.equals(t2) )
-        {return x;}
-    }
-    return null;  // an den vrei employee me auto to email returns null
-}
+ public Employee searchByUsername(String username1)
+ {
+     if(username1==null || username1.trim().isEmpty()){return null;}
+     return employeesByUsername.get(username1.trim().toLowerCase());
 
+
+
+
+
+ }
 
 
 

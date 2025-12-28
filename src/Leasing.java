@@ -1,3 +1,4 @@
+import java.util.Objects;
 public class Leashing {
 
     private String code;
@@ -11,7 +12,7 @@ public class Leashing {
 
     public Car getCar() { return car; }
 
-    public Customer getCustomer { return customer; }
+    public Customer getCustomer() { return customer; }
 
     public String getStartdate() { return startdate; }
 
