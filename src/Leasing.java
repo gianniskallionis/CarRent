@@ -1,4 +1,7 @@
-public class Leashing {
+import java.util.Objects;
+
+
+public class Leasing {
 
     private String code;
     private Car car;
@@ -55,13 +58,37 @@ public class Leashing {
         this.employee = employee;
     }
 
-    public Leashing(String code, Car car, Customer customer, String startdate, String enddate, Employee employee) {
+    public Leasing(String code, Car car, Customer customer, String startdate, String enddate, Employee employee) {
         setCode(code);
         setCar(car);
         setCustomer(customer);
         setStartdate(startdate);
         setEnddate(enddate);
         setEmployee(employee);
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null ) return false;
+        if (this == obj) return true;     // if compared to oneself
+
+        if (!(obj instanceof Leasing)) return false; // if it is not a leasing object it cant be equal
+
+        Leasing leasingTemp = (Leasing) obj;
+        if(this.code==null || leasingTemp.code==null) return false;
+        return (Objects.equals(this.code.toLowerCase(), leasingTemp.code.toLowerCase()));
+    }
+
+    @Override
+    public int hashCode() {
+        if (code==null) return 0;
+        return Objects.hash(code.toLowerCase());
+    }
+
+    public String toString() {
+        return String.format("Leasing [ code= %s, car= %s,customer=  %s, startdate= %s, enddate= %s, employee= %s ]",
+                getCode() ,getCar(),getCustomer(),getStartdate(),getEnddate(),getEmployee()     );
     }
 
 }

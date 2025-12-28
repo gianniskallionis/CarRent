@@ -1,3 +1,7 @@
+import java.util.Objects;
+
+
+
 public class Car {
 
     private String id;
@@ -88,5 +92,29 @@ public class Car {
         setColor(color);
         setStatus(status);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null ) return false;
+        if (this == obj) return true;     // if compared to oneself
+
+        if (!(obj instanceof Car)) return false; // if it is not a car object it cant be equal
+
+        Car carTemp = (Car) obj;
+        if(this.id == null || carTemp.id == null) return false;
+        return (Objects.equals(this.id.toLowerCase(), carTemp.id.toLowerCase()));
+    }
+
+    @Override
+    public int hashCode() {
+        if (id==null) return 0;
+        return Objects.hash(id.toLowerCase());
+    }
+
+    public String toString() {
+        return String.format("Car [ id= %s, plate= %s, brand=  %s, model= %s, year= %s, color= %s, status= %s ]",
+                getId() ,getPlate(),getBrand(),getModel(),getYear(),getColor(),getStatus()       );
+    }
+
 }
 
