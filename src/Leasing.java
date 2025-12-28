@@ -28,14 +28,14 @@ public class Leashing {
 
     public void setCar(Car car) {
         if (car == null) throw new IllegalArgumentException(("null car"));
-        if (car.isEmpty()) throw new IllegalArgumentException("car is empty;");
-        this.car = car.trim();
+        if (car.getId().isEmpty()) throw new IllegalArgumentException("car is empty;");
+        this.car = car;
     }
 
     public void setCustomer(Customer customer) {
         if (customer == null) throw new IllegalArgumentException(("null customer"));
-        if (customer.isEmpty()) throw new IllegalArgumentException("customer is empty;");
-        this.customer = customer.trim();
+        if (customer.getAfm().isEmpty()) throw new IllegalArgumentException("customer is empty;");
+        this.customer = customer;
     }
 
     public void setStartdate(String startdate) {
@@ -52,8 +52,8 @@ public class Leashing {
 
     public void setEmployee(Employee employee) {
         if (employee == null) throw new IllegalArgumentException(("null employee"));
-        if (employee.isEmpty()) throw new IllegalArgumentException("employee is empty;");
-        this.employee = employee.trim();
+        if (employee.getUsername().isEmpty()) throw new IllegalArgumentException("employee is empty;");
+        this.employee = employee;
     }
 
     public Leashing(String code, Car car, Customer customer, String startdate, String enddate, Employee employee) {
