@@ -1,5 +1,5 @@
 import java.util.HashMap;
-
+import java.util.ArrayList;
 /**
  * EmployeeManager
  * <p>
@@ -137,14 +137,12 @@ return true;}// etsi kanw logout;
  {
      if(username1==null || username1.trim().isEmpty()){return null;}
      return employeesByUsername.get(username1.trim().toLowerCase());
-
-
-
-
-
  }
 
+    public ArrayList<Employee> getAllEmployees() {
 
+        return new ArrayList<>(employeesByUsername.values());
+    }
 
 
 
