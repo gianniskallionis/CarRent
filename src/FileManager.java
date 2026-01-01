@@ -70,6 +70,40 @@ catch(IOException e ){System.out.println("Error  Writing in Customers.csv");}
       catch(IOException e ){System.out.println("Error  Writing in Users.csv");}
   }
 
+    /**
+     * the method checks whether  the file has already been created, if it has NOT, it creates it , and adds 2 customers
+     * in it using the Customer constructor, the addCustomer method that adds the customer to the list, and the cm1 customer Manager list
+     * which then is written in the Customers.csv file via the writeCustomers method.
+     * @return  true if the file initializes in the function it returns . if the file already exists , it returns false.
+     */
+  public boolean initializeCustomers() {
+    File file = new File("Customers.csv");
+
+      try {
+          if ((file.exists()  && file.length()>0 )            ) {
+              System.out.println("File already exists.");
+              return false;
+          } else {
+              System.out.println("File created now ");
+              CustomerManager cm1=new CustomerManager();
+              cm1.addCustomer(new Customer("123456789","giannis","antetokounmpo",
+                      "6912345678","giannisAntetokounmpo@gmail.com")    );
+             cm1.addCustomer(new Customer("113456789","kostas","antetokounmpo",
+                     "6911345678","kostasAntetokounmpo@gmail.com"));
+             writeCustomers(cm1);
+             return true;}
+      } catch (Exception e) {
+          System.out.println("error in file creation");
+          return false;
+      }
+    }
+
+
+
+
+
+
+
 
 
 
