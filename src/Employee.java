@@ -61,7 +61,7 @@ public class Employee extends Person {
      *
      */
     @SuppressWarnings("ReassignedVariable")
-    public Employee(String name, String surname , String username, String password , String email )
+    public Employee(String name, String surname , String username, String email , String password)
     {
        super(name,surname,email);
       setUsername((username));
@@ -87,8 +87,8 @@ public class Employee extends Person {
     }
 
     public String toString() {
-        return String.format("Employee [ username= %s, name= %s,surname=  %s, email = %s ]",
-                                     getUsername() ,getName(),getSurname(),getEmail()       );
+        return String.format("Employee [name= %s,surname=  %s,username= %s, email = %s ]"
+                                     ,getName(),getSurname(),getUsername() ,getEmail()       );
     }
 
 

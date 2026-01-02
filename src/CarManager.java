@@ -5,48 +5,84 @@ public class CarManager {
     private ArrayList<Car> carsList;
 
     public CarManager() {
-        carsList = new ArrayList<>();
+        carsList=new ArrayList<>();
     }
 
-    public Car searchByPlate(String plate){
-        if(plate==null ) return null;
+    public Car searchByPlate(String plate) {
 
-        for (Car x:carsList)
-        {if(x.getPlate().trim().equals(plate.trim()))
-            return x;}
-        return null;}
+        if (plate==null) {
+            return null;
+        }
 
-    public Car searchByBrand(String brand){
-        if(brand==null ) return null;
+        for (Car c:carsList) {
+            if (c.getPlate().trim().equals(plate.trim())) {
+                return c;
+            }
+        }
 
-        for (Car x:carsList)
-        {if(x.getBrand().trim().equals(brand.trim()))
-            return x;}
-        return null;}
+        return null;
+    }
 
-    public Car searchByModel(String model){
-        if(model==null ) return null;
 
-        for (Car x:carsList)
-        {if(x.getModel().trim().equals(model.trim()))
-            return x;}
-        return null;}
+    public Car searchByBrand(String brand) {
 
-    public Car searchByColor(String color){
-        if(color==null ) return null;
+        if (brand==null) {
+            return null;
+        }
 
-        for (Car x:carsList)
-        {if(x.getColor().trim().equals(color.trim()))
-            return x;}
-        return null;}
+        for (Car c:carsList) {
+            if (c.getBrand().trim().equals(brand.trim())) {
+                return c;
+            }
+        }
 
-    public Car searchByStatus(String status){
-        if(status==null ) return null;
+        return null;
+    }
 
-        for (Car x:carsList)
-        {if(x.getStatus().trim().equals(status.trim()))
-            return x;}
-        return null;}
+    public Car searchByModel(String model) {
+
+        if (model==null) {
+            return null;
+        }
+
+        for (Car c:carsList) {
+            if (c.getModel().trim().equals(model.trim())) {
+                return c;
+            }
+        }
+
+        return null;
+    }
+
+    public Car searchByColor(String color) {
+
+        if (color==null) {
+            return null;
+        }
+
+        for (Car c:carsList) {
+            if (c.getColor().trim().equals(color.trim())) {
+                return c;
+            }
+        }
+
+        return null;
+    }
+
+    public Car searchByStatus(String status) {
+
+        if (status==null) {
+            return null;
+        }
+
+        for (Car c:carsList) {
+            if (c.getStatus().trim().equals(status.trim())) {
+                return c;
+            }
+        }
+
+        return null;
+    }
 
     public boolean addCar(Car car1)
     {   if(car1 == null || car1.getPlate()==null || searchByPlate(car1.getPlate()) != null ) return false ;
@@ -106,8 +142,6 @@ public class CarManager {
         }
 
         return car2;
-
     }
-
 
 }
