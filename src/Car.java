@@ -41,46 +41,46 @@ public class Car {
     }
 
     public void setId(String id) {
-        if (id == null) throw new IllegalArgumentException(("null id"));
+        if (id==null) throw new IllegalArgumentException(("null id"));
         if (id.isEmpty()) throw new IllegalArgumentException("id is empty;");
-        this.id = id.trim();
+        this.id=id.trim();
     }
 
 
     public void setPlate(String plate) {
-        if (plate == null) throw new IllegalArgumentException(("null plate"));
+        if (plate==null) throw new IllegalArgumentException(("null plate"));
         if (plate.isEmpty()) throw new IllegalArgumentException("plate is empty;");
-        this.plate = plate.trim();
+        this.plate=plate.trim();
     }
 
     public void setBrand(String brand) {
-        if (brand == null) throw new IllegalArgumentException(("null brand"));
+        if (brand==null) throw new IllegalArgumentException(("null brand"));
         if (brand.isEmpty()) throw new IllegalArgumentException("brand is empty;");
-        this.brand = brand.trim();
+        this.brand=brand.trim();
     }
 
     public void setModel(String model) {
-        if (model == null) throw new IllegalArgumentException(("null model"));
+        if (model==null) throw new IllegalArgumentException(("null model"));
         if (model.isEmpty()) throw new IllegalArgumentException("model is empty;");
-        this.model = model.trim();
+        this.model=model.trim();
     }
 
     public void setYear(String year) {
-        if (year == null) throw new IllegalArgumentException(("null year"));
+        if (year==null) throw new IllegalArgumentException(("null year"));
         if (year.isEmpty()) throw new IllegalArgumentException("year is empty;");
-        this.year = year.trim();
+        this.year=year.trim();
     }
 
     public void setColor(String color) {
-        if (color == null) throw new IllegalArgumentException(("null color"));
+        if (color==null) throw new IllegalArgumentException(("null color"));
         if (color.isEmpty()) throw new IllegalArgumentException("color is empty;");
-        this.color = color.trim();
+        this.color=color.trim();
     }
 
     public void setStatus(String status) {
-        if (status == null) throw new IllegalArgumentException(("null status"));
+        if (status==null) throw new IllegalArgumentException(("null status"));
         if (status.isEmpty()) throw new IllegalArgumentException("status is empty;");
-        this.status = status.trim();
+        this.status=status.trim();
     }
 
     public Car(String id, String plate, String brand, String model, String year, String color, String status) {
@@ -95,25 +95,40 @@ public class Car {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj==null ) return false;
-        if (this == obj) return true;     // if compared to oneself
 
-        if (!(obj instanceof Car)) return false; // if it is not a car object it cant be equal
+        if (obj==null) {
+            return false;
+        }
 
-        Car carTemp = (Car) obj;
-        if(this.id == null || carTemp.id == null) return false;
-        return (Objects.equals(this.id.toLowerCase(), carTemp.id.toLowerCase()));
+        if (this==obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Car)) {
+            return false;
+        }
+
+        Car carTemp=(Car) obj;
+
+        if (this.id==null || carTemp.id==null) {
+            return false;
+        }
+
+        return (Objects.equals(this.id.toLowerCase(),carTemp.id.toLowerCase()));
     }
 
     @Override
     public int hashCode() {
-        if (id==null) return 0;
+
+        if (id==null) {
+            return 0;
+        }
+
         return Objects.hash(id.toLowerCase());
     }
 
     public String toString() {
-        return String.format("Car [ id= %s, plate= %s, brand=  %s, model= %s, year= %s, color= %s, status= %s ]",
-                getId() ,getPlate(),getBrand(),getModel(),getYear(),getColor(),getStatus()       );
+        return String.format("Car [ id= %s, plate= %s, brand=  %s, model= %s, year= %s, color= %s, status= %s ]",getId(),getPlate(),getBrand(),getModel(),getYear(),getColor(),getStatus());
     }
 
 }

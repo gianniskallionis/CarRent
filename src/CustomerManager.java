@@ -100,11 +100,11 @@ public class CustomerManager {
      * @return
      */
     public boolean deleteCustomer(String afm) {
-        Customer customer1 = searchByAfm(afm);
+        Customer customer1 = searchByAfm(afm);             // SOS PREPEI NA RWTAEI TON LEASING MANAGER NA DEN AN YPARXOUN ENIKIASEIS PRIN DELETE
         if (customer1 != null) {
             customersList.remove(customer1);
             return true;
-        } return false;
+        } return false;}
 
 
 
