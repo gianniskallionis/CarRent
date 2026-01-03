@@ -1,10 +1,11 @@
+package Api;
+
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
- * CustomerManager
+ * Api.CustomerManager
  * <p>
- * Σύντομη περιγραφή της κλάσης CustomerManager.
+ * Σύντομη περιγραφή της κλάσης Api.CustomerManager.
  *
  * @author giannis
  * @version 07-Dec-25
@@ -18,7 +19,7 @@ public class CustomerManager {
     private ArrayList<Customer> customersList;
 
     /**
-     * Δημιουργεί ένα νέο αντικείμενο CustomerManager.
+     * Δημιουργεί ένα νέο αντικείμενο Api.CustomerManager.
      */
     public CustomerManager() {
         customersList = new ArrayList<>();   // initializing the ArrayList

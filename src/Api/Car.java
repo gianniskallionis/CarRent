@@ -1,3 +1,5 @@
+package Api;
+
 import java.util.Objects;
 
 
@@ -128,7 +130,7 @@ public class Car {
     }
 
     public String toString() {
-        return String.format("Car [ id= %s, plate= %s, brand=  %s, model= %s, year= %s, color= %s, status= %s ]",getId(),getPlate(),getBrand(),getModel(),getYear(),getColor(),getStatus());
+        return String.format("Api.Car [ id= %s, plate= %s, brand=  %s, model= %s, year= %s, color= %s, status= %s ]",getId(),getPlate(),getBrand(),getModel(),getYear(),getColor(),getStatus());
     }
 
 }

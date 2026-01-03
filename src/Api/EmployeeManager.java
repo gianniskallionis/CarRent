@@ -1,7 +1,9 @@
+package Api;
+
 import java.util.HashMap;
 import java.util.ArrayList;
 /**
- * EmployeeManager
+ * Api.EmployeeManager
  * <p>
  * the log in and other stuff happen here
  *

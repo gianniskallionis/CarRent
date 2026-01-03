@@ -1,3 +1,5 @@
+package Api;
+
 public class Renting {
 
     private String code;
