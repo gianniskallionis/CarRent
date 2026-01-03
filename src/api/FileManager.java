@@ -1,4 +1,4 @@
-package Api;
+package api;
 
 import java.io.*;
 
@@ -7,7 +7,7 @@ public class FileManager {
 
     CustomerManager readCustomers(){
         CustomerManager Customers = new CustomerManager(); // list of which i will read from
-        try(BufferedReader reader = new BufferedReader(new FileReader ("Api/customers.csv")  )  ) // opens file
+        try(BufferedReader reader = new BufferedReader(new FileReader ("customers.csv")  )  ) // opens file
         {
 reader.readLine();// ignores the 1st line as they are the formation: Afm,name,surname,number,email.
             String line;
@@ -25,7 +25,7 @@ reader.readLine();// ignores the 1st line as they are the formation: Afm,name,su
         return Customers;}
 
     public  void writeCustomers(CustomerManager CustomersToWrite){
-        try (BufferedWriter writer = new BufferedWriter(    (new FileWriter("Api/customers.csv")   )    )     )// opens file to write with writer
+        try (BufferedWriter writer = new BufferedWriter(    (new FileWriter("customers.csv")   )    )     )// opens file to write with writer
         {
 writer.write("afm,name,surname,number,email");  // writes the structure
 writer.newLine();  // continues to the next line  , same function as \n
@@ -39,7 +39,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
   EmployeeManager readEmployees() {
       EmployeeManager users = new EmployeeManager(); // hashmap of which i will read from
-      try (BufferedReader reader = new BufferedReader((new FileReader("Api/employees.csv")))) {
+      try (BufferedReader reader = new BufferedReader((new FileReader("employees.csv")))) {
           reader.readLine(); // ignores the 1st line cuz its  the structure
           String line;
           while ((line = reader.readLine()) != null) //  while there are lines to be read
@@ -58,7 +58,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
   }
 
   public void writeEmployees(EmployeeManager UsersToWrite){
-      try (BufferedWriter writer = new BufferedWriter(    (new FileWriter("Api/employees.csv")   )    )     )// opens file to write with writer
+      try (BufferedWriter writer = new BufferedWriter(    (new FileWriter("employees.csv")   )    )     )// opens file to write with writer
       {
           writer.write("name,surname,username,email,password");  // writes the structure
           writer.newLine();  // continues to the next line  , same function as \n
@@ -77,7 +77,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
      * @return  true if the file initializes in the function it returns . if the file already exists , it returns false.
      */
   public boolean initializeCustomers() {
-    File file = new File("Api/customers.csv");
+    File file = new File("customers.csv");
 
       try {
           if ((file.exists()  && file.length()>0 )            ) {
@@ -98,7 +98,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
       }
     }
  public boolean initializeEmployees(){
-      File file=new File("Api/employees.csv");
+      File file=new File("employees.csv");
  try {
      if ((file.exists() && file.length() > 0)) {
          System.out.println("File already exists.");
@@ -117,16 +117,6 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
      }
  } catch(Exception e) {System.out.println("Error in employees.csv file "); return false;}
      }
-
-
-
-
-
-
-
-
-
-
  }
 
 
@@ -137,7 +127,6 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
 
 
-  }
 
 
 
@@ -155,7 +144,8 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
 
 
-  }
+
+
 
 
 
