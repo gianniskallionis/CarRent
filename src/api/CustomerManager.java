@@ -44,12 +44,12 @@ public class CustomerManager {
      * @param newEmail
      * @param newNumber
      */
-    public boolean editCustomer(String afm, String newName, String newSurname, String newEmail, String newNumber)
+    public boolean editCustomer(String afm, String newName, String newSurname, String newNumber,String newEmail )
     {  if (this.searchByAfm(afm)==null) return false;
         if (newName!=null )this.searchByAfm(afm).setName(newName.trim());
         if (newSurname!=null ) this.searchByAfm(afm).setSurname(newSurname.trim());
-        if (newEmail!=null )  this.searchByAfm(afm).setEmail(newEmail.trim());
         if (newNumber!=null )  this.searchByAfm(afm).setNumber(newNumber.trim());
+        if (newEmail!=null )  this.searchByAfm(afm).setEmail(newEmail.trim());
         return true;
     }
 

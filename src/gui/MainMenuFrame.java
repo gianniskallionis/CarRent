@@ -1,4 +1,6 @@
 package gui;
+import api.CustomerManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -6,10 +8,11 @@ public class MainMenuFrame {
 
 
     public MainMenuFrame(){
+          CustomerManager  customerManager1=new CustomerManager();
 JFrame frame=new JFrame("Main Menu");
 frame.setSize(800,400);
 JButton carManagementButton, customerManagementButton, carRentalButton, carReturnButton,
-                 searchCustomerButton, historyButton,carSearchButton,
+                CustomerSearchButton, historyButton,carSearchButton,
                 usersManagementButton, logoutButton;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(3,3,10,10));
@@ -18,13 +21,20 @@ JButton carManagementButton, customerManagementButton, carRentalButton, carRetur
         frame.add( carRentalButton =new JButton("car rental "));
         frame.add( carReturnButton =new JButton("Car return"));
         frame.add(carSearchButton= new JButton("Car search"));
-        frame.add( searchCustomerButton =new JButton("customer search "));
+        frame.add( CustomerSearchButton =new JButton("customer search "));
         frame.add(historyButton =new JButton("rental history"));
         frame.add(usersManagementButton =new JButton("user management"));
         frame.add(logoutButton=new JButton("logout"));
         frame.setVisible(true);
         carManagementButton.addActionListener(e -> {});
         // to be continued when all guis are finished
+            customerManagementButton.addActionListener(e->{
+                    CustomerManagerGui customerManagerGui1=new CustomerManagerGui(customerManager1);  });
+
+
+
+
+
 
 
 
