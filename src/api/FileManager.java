@@ -117,8 +117,9 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
      }
  } catch(Exception e) {System.out.println("Error in employees.csv file "); return false;}
      }
+     //-----------------------------------------------------------------------------------------------------------------------------
 
-    public CarManager readVehicles() {
+     CarManager readVehicles() {
 
         CarManager Cars=new CarManager();
 
@@ -132,7 +133,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
                 String[] parts=line.split(",",8);
 
-                if (parts.length==) {
+                if (parts.length==8) {
                     String id=parts[0].trim();
                     String plate=parts[1].trim();
                     String brand=parts[2].trim();
@@ -221,7 +222,9 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
             for (Car c:carsToWrite.getAllCars()) {
 
-                writer.write(c.getId().trim() + "," + c.getPlate().trim() + "," + c.getBrand().trim() + "," + c.getType().trim() + "," + c.getModel().trim() + "," + c.getYear().trim() + "," + c.getColor().trim() + "," + c.getStatus().trim());
+                writer.write(c.getId().trim() + "," + c.getPlate().trim() + "," + c.getBrand().trim() + ","
+                        + c.getType().trim() + "," + c.getModel().trim() + "," + c.getYear().trim() + "," + c.getColor().trim() + ","
+                        + c.getStatus().trim());
                 writer.newLine();
 
             }
@@ -243,7 +246,8 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
             for (Renting r:rentalsToWrite.getAllRentings()) {
 
-                writer.write(r.getCode().trim() + "," + r.getCar().getPlate().trim() + "," + r.getCustomer().getAfm().trim() + "," + r.getStartdate().trim() + "," + r.getEnddate().trim() + "," + r.getEmployee().getUsername().trim());
+                writer.write(r.getCode().trim() + "," + r.getCar().getPlate().trim() + "," + r.getCustomer().getAfm().trim()
+                        + "," + r.getStartDate().trim() + "," + r.getEndDate().trim() + "," + r.getEmployee().getUsername().trim());
                 writer.newLine();
 
             }
