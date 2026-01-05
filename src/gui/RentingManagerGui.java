@@ -1,24 +1,22 @@
 package gui;
 
-import api.Car;
-import api.CarManager;
-import api.Customer;
-import api.Renting;
-import api.RentingManager;
-import api.Employee;
+import api.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class RentingManagerGui {
-
-    public RentingManagerGui(CarManager carManager, RentingManager rentingManager) {
+    private CustomerManager customerManager;
+    private Employee currentUser;
+    public RentingManagerGui(CarManager carManager, CustomerManager customerManager, RentingManager rentingManager,Employee currentUser) {
 
         JFrame parentFrame = new JFrame("Welcome to Renting Manager");
         parentFrame.setSize(900, 400);
         parentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         parentFrame.setLayout(new FlowLayout());
+        this.customerManager = customerManager;
+        this.currentUser = currentUser;
 
         JPanel panel = new JPanel(new GridLayout(2, 2, 20, 20));
         parentFrame.add(panel);
@@ -84,11 +82,9 @@ public class RentingManagerGui {
                     return;
                 }
 
-                Employee employee = new Employee("Admin", "admin", "admin@test.com", "adminpass");
+                Customer customer = customerManager.searchByAfm(afm);
 
-                Customer customer = new Customer(afm, "Unknown", "Unknown", "", "");
-
-                Renting renting = new Renting("R" + System.currentTimeMillis(), car, customer, startDate, endDate, employee);
+                Renting renting = new Renting("R" + System.currentTimeMillis(), car, customer, startDate, endDate, currentUser);
                 if (rentingManager.rentCar(renting)) {
                     JOptionPane.showMessageDialog(newRentDialog, "Car rented successfully!");
                     newRentDialog.dispose();
@@ -142,7 +138,7 @@ public class RentingManagerGui {
                 }
 
                 if (foundRenting == null) {
-                    JOptionPane.showMessageDialog(returnDialog, "Rental not found!");
+                    JOptionPane.showMessageDialog(returnDialog, "Rental with code " + code + " not found!");
                     return;
                 }
 
@@ -190,7 +186,11 @@ public class RentingManagerGui {
                     return;
                 }
 
-                Customer customer = new Customer(afm, "Unknown", "Unknown", "", "");
+                Customer customer = customerManager.searchByAfm(afm);
+                if (customer == null) {
+                    JOptionPane.showMessageDialog(dialog, "Customer with AFM " + afm + " not found!");
+                    return;
+                }
                 ArrayList<Renting> rentals = rentingManager.CustomerRentings(customer);
 
                 dialog.dispose();
@@ -266,7 +266,7 @@ public class RentingManagerGui {
 
                 Car car = carManager.searchByPlate(plate);
                 if (car == null) {
-                    JOptionPane.showMessageDialog(dialog, "Car not found!");
+                    JOptionPane.showMessageDialog(dialog, "Car with plate " + plate + " not found!");
                     return;
                 }
 
@@ -311,4 +311,4 @@ public class RentingManagerGui {
         });
 
         parentFrame.setVisible(true);
-    }
+    }}
