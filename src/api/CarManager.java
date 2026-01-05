@@ -97,59 +97,32 @@ public class CarManager {
         return true;
     }
 
-    public Car searchCombined(String plate,String brand,String model,String color,String status) {
+public ArrayList<Car> searchCombined(String plate, String brand, String model, String color, String status) {
+    ArrayList<Car> results = new ArrayList<>();
 
-        if (plate==null && brand==null && model==null && color==null && status==null) {
-            return null;
-        }
+    for (Car car : carsList) {
+        boolean matches = true;
 
-        Car car2=null;
-
-        if (plate!=null)
-        {
-            car2=searchByPlate(plate);
+        if (plate != null && !car.getPlate().toLowerCase().contains(plate.toLowerCase())) {
+            matches = false;
         }
-        else if (brand!=null)
-        {
-            car2=searchByBrand(brand);
+        if (brand != null && !car.getBrand().toLowerCase().contains(brand.toLowerCase())) {
+            matches = false;
         }
-        else if (model!=null)
-        {
-            car2=searchByModel(model);
+        if (model != null && !car.getModel().toLowerCase().contains(model.toLowerCase())) {
+            matches = false;
         }
-        else if (color!=null)
-        {
-            car2=searchByColor(color);
+        if (color != null && !car.getColor().toLowerCase().contains(color.toLowerCase())) {
+            matches = false;
         }
-        else if (status!=null)
-        {
-            car2=searchByStatus(status);
+        if (status != null && !car.getStatus().toLowerCase().contains(status.toLowerCase())) {
+            matches = false;
         }
 
-        if (car2==null)
-        {
-            return null;
-        }
+        if (matches) {
+            results.add(car);}}
+    return results;}
 
-
-        if (brand != null && !car2.getBrand().trim().equals(brand.trim())) {
-            return null;
-        }
-
-        if (model != null && !car2.getModel().trim().equals(model.trim())) {
-            return null;
-        }
-
-        if (color != null && !car2.getColor().trim().equals(color.trim())) {
-            return null;
-        }
-
-        if (status != null && !car2.getStatus().trim().equals(status.trim())) {
-            return null;
-        }
-
-        return car2;
-    }
 
     public ArrayList<Car> getAllCars() {
         return new ArrayList<>(carsList);

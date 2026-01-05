@@ -22,7 +22,6 @@ public class RentingManager {
 
         r1.getCar().setStatus("Rented");
         rentingList.add(r1);
-
         return true;
 
     }

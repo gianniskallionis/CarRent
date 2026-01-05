@@ -118,7 +118,9 @@ return true;}// etsi kanw logout;
     return false;
 }
 
-
+    public Employee getCurrentUser() {
+        return currentUser;
+    }
 
 
 

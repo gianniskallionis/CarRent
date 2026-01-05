@@ -1,6 +1,6 @@
 package gui;
-import api.Employee;
-import api.EmployeeManager;
+import api.*;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -35,8 +35,16 @@ if (status== EmployeeManager.loginStatus.wrong_username) {
       JOptionPane.showMessageDialog(frame,"wrong Password");
  else if (status== EmployeeManager.loginStatus.success)
  {   JOptionPane.showMessageDialog(frame,"login successfull");
-     frame.dispose();   }
-});// the actionlistener closes here
+     frame.dispose();
+     FileManager fileManager = new FileManager();
+     CarManager carManager = fileManager.readVehicles();
+     CustomerManager customerManager = fileManager.readCustomers();
+     RentingManager rentingManager = fileManager.readRentals(carManager, customerManager, employeeManager1);
+
+
+     new MainMenuFrame(employeeManager1, customerManager, rentingManager, carManager);}
+
+});
    }
 }
 

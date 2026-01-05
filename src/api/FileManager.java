@@ -5,7 +5,7 @@ import java.io.*;
 public class FileManager {
 
 
-    CustomerManager readCustomers(){
+    public CustomerManager readCustomers(){
         CustomerManager Customers = new CustomerManager(); // list of which i will read from
         try(BufferedReader reader = new BufferedReader(new FileReader ("customers.csv")  )  ) // opens file
         {
@@ -37,7 +37,7 @@ writer.newLine();//  goes to the next line for the next batch of writing
 catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 }
 
-  EmployeeManager readEmployees() {
+  public EmployeeManager readEmployees() {
       EmployeeManager users = new EmployeeManager(); // hashmap of which i will read from
       try (BufferedReader reader = new BufferedReader((new FileReader("employees.csv")))) {
           reader.readLine(); // ignores the 1st line cuz its  the structure
@@ -119,7 +119,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
      }
      //-----------------------------------------------------------------------------------------------------------------------------
 
-     CarManager readVehicles() {
+     public CarManager readVehicles() {
 
         CarManager Cars=new CarManager();
 
@@ -275,15 +275,15 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
             CarManager CM1=new CarManager();
 
-            CM1.addCar(new Car("1","IKY1234","Toyota","Sedan","Corolla","2019","Silver","Available"));
+            CM1.addCar(new Car("1","IKY1234","Toyota","Sedan","Corolla","2019","Ασημί","Available"));
 
-            CM1.addCar(new Car("2","NBP5678","Honda","Hatchback","Civic","2020","Blue","Available"));
+            CM1.addCar(new Car("2","NBP5678","Honda","Hatchback","Civic","2020","Μπλε","Available"));
 
-            CM1.addCar(new Car("3","RTL9012","Ford","SUV","Focus","2021","Black","Available"));
+            CM1.addCar(new Car("3","RTL9012","Ford","SUV","Focus","2021","Μαύρο","Available"));
 
-            CM1.addCar(new Car("4","XZA3456","Volkswagen","Sedan","Passat","2018","White","Available"));
+            CM1.addCar(new Car("4","XZA3456","Volkswagen","Sedan","Passat","2018","Λευκό","Available"));
 
-            CM1.addCar(new Car("5","EMK7890","Nissan","Crossover","Qashqai","2022","Red","Available"));
+            CM1.addCar(new Car("5","EMK7890","Nissan","Crossover","Qashqai","2022","Κόκκινο","Available"));
 
             writeVehicles(CM1);
 
@@ -300,7 +300,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     public boolean initializeRentals() {
 
-        File file=new File("rentals.csv.csv");
+        File file=new File("rentals.csv");
 
         try {
 

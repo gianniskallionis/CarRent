@@ -1,17 +1,34 @@
 package gui;
-import api.CustomerManager;
-import api.RentingManager;
+import api.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuFrame {
+    private EmployeeManager employeeManager;
+    private CustomerManager customerManager;
+    private RentingManager rentingManager;
+    private CarManager carManager;
+    private JFrame frame;
 
 
-    public MainMenuFrame(){
-          CustomerManager  customerManager1=new CustomerManager();
-        RentingManager     rentingManager1=new RentingManager();
-JFrame frame=new JFrame("Main Menu");
+
+
+
+
+    public MainMenuFrame(EmployeeManager empManager, CustomerManager custManager,
+                         RentingManager rentManager, CarManager carManager){
+
+        this.employeeManager = empManager;
+        this.customerManager = custManager;
+        this.rentingManager = rentManager;
+        this.carManager = carManager;
+
+
+
+
+
+ frame=new JFrame("Main Menu");
 frame.setSize(800,400);
 JButton carManagementButton, customerManagementButton, carRentalButton, carReturnButton,
                 CustomerSearchButton, historyButton,carSearchButton,
@@ -27,35 +44,57 @@ JButton carManagementButton, customerManagementButton, carRentalButton, carRetur
         frame.add(historyButton =new JButton("rental history"));
         frame.add(usersManagementButton =new JButton("user management"));
         frame.add(logoutButton=new JButton("logout"));
-        frame.setVisible(true);
-        carManagementButton.addActionListener(e -> {});
-        // to be continued when all guis are finished
+
+
             customerManagementButton.addActionListener(e->{
-                    CustomerManagerGui customerManagerGui1=new CustomerManagerGui(customerManager1,rentingManager1);  });
+                    CustomerManagerGui customerManagerGui1=new CustomerManagerGui(this.customerManager, this.rentingManager);  });
 
+        carManagementButton.addActionListener(e -> {
+            new CarManagerGui(this.carManager);
+        });
 
+        carRentalButton.addActionListener(e -> {
 
+            Employee currentUser = this.employeeManager.getCurrentUser();
+            if (currentUser == null) {
+                JOptionPane.showMessageDialog(this.frame, "No user logged in!");
+                return;
+            }
+            new RentingManagerGui(this.carManager, this.customerManager,
+                    this.rentingManager, currentUser);});
 
+        carReturnButton.addActionListener(e -> {
+            Employee currentUser = this.employeeManager.getCurrentUser();
+            if (currentUser == null) {
+                JOptionPane.showMessageDialog(this.frame, "No user logged in!");
+                return;
+            }
+            new RentingManagerGui(this.carManager, this.customerManager,
+                    this.rentingManager, currentUser);});
 
+        carSearchButton.addActionListener(e -> {
+            new CarManagerGui(this.carManager);});
 
+        CustomerSearchButton.addActionListener(e -> {
 
+            new CustomerManagerGui(this.customerManager, this.rentingManager);});
 
+        historyButton.addActionListener(e -> {
 
+            Employee currentUser = this.employeeManager.getCurrentUser();
+            if (currentUser == null) {
+                JOptionPane.showMessageDialog(this.frame, "No user logged in!");
+                return;}
+            new RentingManagerGui(this.carManager, this.customerManager,
+                    this.rentingManager, currentUser);});
 
+        usersManagementButton.addActionListener(e -> {
+            new EmployeeManagerGUI(this.employeeManager);});
 
-
-
-
-
-
-
-
-
-
-
-
-
+        logoutButton.addActionListener(e -> {
+            this.employeeManager.logoutUser();
+            this.frame.dispose();
+        });
+        frame.setVisible(true);
     }
-
-
 }

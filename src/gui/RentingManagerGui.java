@@ -7,15 +7,22 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class RentingManagerGui {
+    private CarManager carManager;
     private CustomerManager customerManager;
+    private RentingManager rentingManager;
     private Employee currentUser;
+
+
     public RentingManagerGui(CarManager carManager, CustomerManager customerManager, RentingManager rentingManager,Employee currentUser) {
 
         JFrame parentFrame = new JFrame("Welcome to Renting Manager");
         parentFrame.setSize(900, 400);
         parentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         parentFrame.setLayout(new FlowLayout());
+
+        this.carManager = carManager;
         this.customerManager = customerManager;
+        this.rentingManager = rentingManager;
         this.currentUser = currentUser;
 
         JPanel panel = new JPanel(new GridLayout(2, 2, 20, 20));
