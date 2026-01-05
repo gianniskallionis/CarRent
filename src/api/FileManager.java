@@ -300,12 +300,12 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     public boolean initializeRentals() {
 
-        File file=new File("rentals.csv");
+        File file=new File("rentals.csv.csv");
 
         try {
 
             if (file.exists() && file.length()>0) {
-                System.out.println("rentals.csv already exists.");
+                System.out.println("rentals.csv.csv already exists.");
                 return false;
             }
 
