@@ -2,10 +2,9 @@ package gui;
 import api.CustomerManager;
 import api.Customer;
 import api.RentingManager;
-import com.sun.source.tree.ParenthesizedTree;
-
 import javax.swing.*;
 import java.awt.*;
+
 public class CustomerManagerGui {
 
     public CustomerManagerGui(CustomerManager customerManager1, RentingManager rentingManager1) {
@@ -308,10 +307,10 @@ panel.add(searchCustomerButton);
          JDialog searchByNumberDialog = new JDialog(ParentFrame, "Search By Number", true);
          JPanel searchByNumberPanel = new JPanel((new GridLayout(1, 2, 10, 10)));
          searchByNumberDialog.setLayout(new BorderLayout());
-         JLabel enterPhoneLabel = new JLabel(("Enter  Number:"));  // writes enter phone
-         JTextField enterPhoneField = new JTextField(10); // reads the phone
-         searchByNumberPanel.add(enterPhoneLabel);
-         searchByNumberPanel.add(enterPhoneField);
+         JLabel enterNumberLabel = new JLabel(("Enter  Number:"));  // writes enter phone
+         JTextField enterNumberField = new JTextField(10); // reads the phone
+         searchByNumberPanel.add(enterNumberLabel);
+         searchByNumberPanel.add(enterNumberField);
          searchByNumberDialog.add(searchByNumberPanel, BorderLayout.CENTER);
 
          // Buttons -----
@@ -328,8 +327,8 @@ panel.add(searchCustomerButton);
          });
 
          okButton.addActionListener(e2 -> {
-             String phone = enterPhoneField.getText().trim();
-             if (phone.isEmpty()) {
+             String number = enterNumberField.getText().trim();
+             if (number.isEmpty()) {
                  JOptionPane.showMessageDialog(searchByNumberDialog,
                          "Please enter a non empty number",
                          "Input Error",
@@ -338,7 +337,7 @@ panel.add(searchCustomerButton);
              }
 
              Customer c1;
-             c1 = customerManager1.searchByNumber(phone);
+             c1 = customerManager1.searchByNumber(number);
 
              if (c1 == null) {
                  JOptionPane.showMessageDialog(searchByNumberDialog, "Customer not found with given  number");
