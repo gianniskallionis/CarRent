@@ -13,7 +13,7 @@ public class Renting {
 
     public Car getCar() { return car; }
 
-    public Customer getCustomer { return customer; }
+    public Customer getCustomer() { return customer; }
 
     public String getStartDate() { return startDate; }
 
