@@ -93,6 +93,18 @@ public class RentingManager {
         }
         return false;}
 
+    public boolean addRenting(Renting renting1) {
+        if (renting1==null) {
+            return false;
+        }
+        rentingList.add(renting1);
+        return true;
+    }
+
+    public ArrayList<Renting> getAllRentings() {
+        return new ArrayList<>(rentingList);
+    }
+
 
 
 
