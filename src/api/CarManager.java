@@ -1,5 +1,3 @@
-package api;
-
 import java.util.ArrayList;
 
 public class CarManager {
@@ -86,8 +84,11 @@ public class CarManager {
         return null;
     }
 
-    public boolean addCar(Car car1)
-    {   if(car1 == null || car1.getPlate()==null || searchByPlate(car1.getPlate()) != null ) return false ;
+    public boolean addCar(Car car1) {
+
+        if (car1==null || car1.getPlate()==null || searchByPlate(car1.getPlate())!=null ) {
+            return false;
+        }
         carsList.add(car1);
         return true;
     }
@@ -144,6 +145,10 @@ public class CarManager {
         }
 
         return car2;
+    }
+
+    public ArrayList<Car> getAllCars() {
+        return new ArrayList<>(carsList);
     }
 
 }
