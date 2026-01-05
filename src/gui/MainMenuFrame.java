@@ -1,5 +1,6 @@
 package gui;
 import api.CustomerManager;
+import api.RentingManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ public class MainMenuFrame {
 
     public MainMenuFrame(){
           CustomerManager  customerManager1=new CustomerManager();
+        RentingManager     rentingManager1=new RentingManager();
 JFrame frame=new JFrame("Main Menu");
 frame.setSize(800,400);
 JButton carManagementButton, customerManagementButton, carRentalButton, carReturnButton,
@@ -29,7 +31,7 @@ JButton carManagementButton, customerManagementButton, carRentalButton, carRetur
         carManagementButton.addActionListener(e -> {});
         // to be continued when all guis are finished
             customerManagementButton.addActionListener(e->{
-                    CustomerManagerGui customerManagerGui1=new CustomerManagerGui(customerManager1);  });
+                    CustomerManagerGui customerManagerGui1=new CustomerManagerGui(customerManager1,rentingManager1);  });
 
 
 

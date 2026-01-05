@@ -79,6 +79,25 @@ public class RentingManager {
         
     }
 
+    /**
+     *
+     * @param customer
+     * @return
+     */
+    public boolean hasActiveRentalsForCustomer(Customer customer) {
+        if (customer == null) return false;
+        for (Renting renting : rentingList) {
+            if (renting.getCustomer().equals(customer) &&
+                    renting.getCar().getStatus().equals("Rented")) {
+                return true;}
+        }
+        return false;}
+
+
+
+
+
+
 }
 
 

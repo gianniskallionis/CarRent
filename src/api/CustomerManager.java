@@ -97,16 +97,17 @@ public class CustomerManager {
 
     /**
      *
-     * @param afm
-     * @return
+     *
+     *
      */
-    public boolean deleteCustomer(String afm) {
-        Customer customer1 = searchByAfm(afm);             // SOS PREPEI NA RWTAEI TON LEASING MANAGER NA DEN AN YPARXOUN ENIKIASEIS PRIN DELETE
-        if (customer1 != null) {
-            customersList.remove(customer1);
-            return true;
-        } return false;}
-
+    public boolean deleteCustomer(String afm, RentingManager rentingManager) {
+        Customer customer1 = searchByAfm(afm);
+        if (customer1 == null) {
+            return false;}
+        if (rentingManager != null && rentingManager.hasActiveRentalsForCustomer(customer1)) {
+            return false; }
+        customersList.remove(customer1);
+        return true;}
 
 
 

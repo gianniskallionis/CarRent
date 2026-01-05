@@ -5,8 +5,8 @@ public class Renting {
     private String code;
     private Car car;
     private Customer customer;
-    private String startdate;
-    private String enddate;
+    private String startDate;
+    private String endDate;
     private Employee employee;
 
     public String getCode() { return code; }
@@ -15,9 +15,9 @@ public class Renting {
 
     public Customer getCustomer { return customer; }
 
-    public String getStartdate() { return startdate; }
+    public String getStartDate() { return startdate; }
 
-    public String getEnddate() { return enddate; }
+    public String getEndDate() { return enddate; }
 
     public Employee getEmployee() { return employee;  }
 
