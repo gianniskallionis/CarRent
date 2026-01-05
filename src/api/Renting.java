@@ -15,9 +15,9 @@ public class Renting {
 
     public Customer getCustomer { return customer; }
 
-    public String getStartDate() { return startdate; }
+    public String getStartDate() { return startDate; }
 
-    public String getEndDate() { return enddate; }
+    public String getEndDate() { return endDate; }
 
     public Employee getEmployee() { return employee;  }
 
@@ -42,13 +42,13 @@ public class Renting {
     public void setStartdate(String startdate) {
         if (startdate==null) throw new IllegalArgumentException(("null startdate"));
         if (startdate.isEmpty()) throw new IllegalArgumentException("startdate is empty;");
-        this.startdate=startdate.trim();
+        this.startDate=startdate.trim();
     }
 
     public void setEnddate(String enddate) {
         if (enddate==null) throw new IllegalArgumentException(("null enddate"));
         if (enddate.isEmpty()) throw new IllegalArgumentException("enddate is empty;");
-        this.enddate=enddate.trim();
+        this.endDate=enddate.trim();
     }
 
     public void setEmployee(Employee employee) {
