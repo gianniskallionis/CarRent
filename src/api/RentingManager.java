@@ -12,7 +12,7 @@ public class RentingManager {
 
     public boolean rentCar(Renting r1) {
 
-        if (r1==null || r1.getCar()==null || r1.getCustomer()==null) {
+        if (r1 == null || r1.getCar() == null || r1.getCustomer() == null) {
             return false;
         }
 
@@ -29,7 +29,7 @@ public class RentingManager {
 
     public boolean returnCar(Renting r2) {
 
-        if (r2==null) {
+        if (r2 == null) {
             return false;
         }
 
@@ -45,9 +45,9 @@ public class RentingManager {
 
     public ArrayList<Renting> CustomerRentings(Customer c1) {
 
-        ArrayList<Renting> CustomerRentingsList=new ArrayList<>();
+        ArrayList<Renting> CustomerRentingsList = new ArrayList<>();
 
-        if (c1==null) {
+        if (c1 == null) {
             return CustomerRentingsList;
         }
 
@@ -63,9 +63,9 @@ public class RentingManager {
 
     public ArrayList<Renting> CarRentings(Car car1) {
 
-        ArrayList<Renting> CarRentingsList =new ArrayList<>();
+        ArrayList<Renting> CarRentingsList = new ArrayList<>();
 
-        if (car1==null) {
+        if (car1 == null) {
             return CarRentingsList;
         }
 
@@ -76,7 +76,7 @@ public class RentingManager {
         }
 
         return CarRentingsList;
-        
+
     }
 
     /**
@@ -89,12 +89,14 @@ public class RentingManager {
         for (Renting renting : rentingList) {
             if (renting.getCustomer().equals(customer) &&
                     renting.getCar().getStatus().equals("Rented")) {
-                return true;}
+                return true;
+            }
         }
-        return false;}
+        return false;
+    }
 
     public boolean addRenting(Renting renting1) {
-        if (renting1==null) {
+        if (renting1 == null) {
             return false;
         }
         rentingList.add(renting1);
@@ -104,10 +106,6 @@ public class RentingManager {
     public ArrayList<Renting> getAllRentings() {
         return new ArrayList<>(rentingList);
     }
-
-
-
-
 
 
 }
