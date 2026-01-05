@@ -1,10 +1,11 @@
+package api;
+
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
- * CustomerManager
+ * Api.CustomerManager
  * <p>
- * Σύντομη περιγραφή της κλάσης CustomerManager.
+ * Σύντομη περιγραφή της κλάσης Api.CustomerManager.
  *
  * @author giannis
  * @version 07-Dec-25
@@ -18,7 +19,7 @@ public class CustomerManager {
     private ArrayList<Customer> customersList;
 
     /**
-     * Δημιουργεί ένα νέο αντικείμενο CustomerManager.
+     * Δημιουργεί ένα νέο αντικείμενο Api.CustomerManager.
      */
     public CustomerManager() {
         customersList = new ArrayList<>();   // initializing the ArrayList
@@ -43,12 +44,12 @@ public class CustomerManager {
      * @param newEmail
      * @param newNumber
      */
-    public boolean editCustomer(String afm, String newName, String newSurname, String newEmail, String newNumber)
+    public boolean editCustomer(String afm, String newName, String newSurname, String newNumber,String newEmail )
     {  if (this.searchByAfm(afm)==null) return false;
         if (newName!=null )this.searchByAfm(afm).setName(newName.trim());
         if (newSurname!=null ) this.searchByAfm(afm).setSurname(newSurname.trim());
-        if (newEmail!=null )  this.searchByAfm(afm).setEmail(newEmail.trim());
         if (newNumber!=null )  this.searchByAfm(afm).setNumber(newNumber.trim());
+        if (newEmail!=null )  this.searchByAfm(afm).setEmail(newEmail.trim());
         return true;
     }
 
@@ -96,16 +97,17 @@ public class CustomerManager {
 
     /**
      *
-     * @param afm
-     * @return
+     *
+     *
      */
-    public boolean deleteCustomer(String afm) {
-        Customer customer1 = searchByAfm(afm);             // SOS PREPEI NA RWTAEI TON LEASING MANAGER NA DEN AN YPARXOUN ENIKIASEIS PRIN DELETE
-        if (customer1 != null) {
-            customersList.remove(customer1);
-            return true;
-        } return false;}
-
+    public boolean deleteCustomer(String afm, RentingManager rentingManager) {
+        Customer customer1 = searchByAfm(afm);
+        if (customer1 == null) {
+            return false;}
+        if (rentingManager != null && rentingManager.hasActiveRentalsForCustomer(customer1)) {
+            return false; }
+        customersList.remove(customer1);
+        return true;}
 
 
 

@@ -1,3 +1,5 @@
+package api;
+
 import java.util.Objects;
 
 /**
@@ -50,7 +52,7 @@ public class Employee extends Person {
 
     /**
      * A constructor who trims the first spaces so that the entry is smooth, checks if the strings are null or empty to ensure correct entries then sets
-     * the variables with the given inputs. firstly it calls the constructor of the Person class to initiate the common fields with  the Customer class
+     * the variables with the given inputs. firstly it calls the constructor of the Api.Person class to initiate the common fields with  the Api.Customer class
      * @param name the name of the employee
      * @param surname the surname of the employee
      * @param  username the username the employee uses to log in
@@ -87,7 +89,7 @@ public class Employee extends Person {
     }
 
     public String toString() {
-        return String.format("Employee [name= %s,surname=  %s,username= %s, email = %s ]"
+        return String.format("Api.Employee [name= %s,surname=  %s,username= %s, email = %s ]"
                                      ,getName(),getSurname(),getUsername() ,getEmail()       );
     }
 

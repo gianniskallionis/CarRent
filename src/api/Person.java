@@ -1,7 +1,9 @@
+package api;
+
 /**
- * Person
+ * Api.Person
  * <p>
- * Σύντομη περιγραφή της κλάσης Person.
+ * Σύντομη περιγραφή της κλάσης Api.Person.
  *
  * @author giannis
  * @version 05-Dec-25

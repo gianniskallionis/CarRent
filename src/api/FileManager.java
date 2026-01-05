@@ -1,9 +1,11 @@
+package api;
+
 import java.io.*;
 
 public class FileManager {
 
 
-    CustomerManager  readCustomers(){
+    CustomerManager readCustomers(){
         CustomerManager Customers = new CustomerManager(); // list of which i will read from
         try(BufferedReader reader = new BufferedReader(new FileReader ("customers.csv")  )  ) // opens file
         {
@@ -70,7 +72,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     /**
      * the method checks whether  the file has already been created, if it has NOT, it creates it , and adds 2 customers
-     * in it using the Customer constructor, the addCustomer method that adds the customer to the list, and the cm1 customer Manager list
+     * in it using the Api.Customer constructor, the addCustomer method that adds the customer to the list, and the cm1 customer Manager list
      * which then is written in the customers.csv file via the writeCustomers method.
      * @return  true if the file initializes in the function it returns . if the file already exists , it returns false.
      */
@@ -115,211 +117,6 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
      }
  } catch(Exception e) {System.out.println("Error in employees.csv file "); return false;}
      }
-
-
-    public CarManager readVehicles() {
-
-        CarManager Cars=new CarManager();
-
-        try (BufferedReader reader=new BufferedReader(new FileReader("vehicles.csv"))) {
-
-            reader.readLine();
-
-            String line;
-
-            while ((line=reader.readLine())!=null) {
-
-                String[] parts=line.split(",",8);
-
-                if (parts.length==) {
-                    String id=parts[0].trim();
-                    String plate=parts[1].trim();
-                    String brand=parts[2].trim();
-                    String type=parts[3].trim();
-                    String model=parts[4].trim();
-                    String year=parts[5].trim();
-                    String color=parts[6].trim();
-                    String status=parts[7].trim();
-
-                    if (Cars.searchByPlate(plate)!=null) {
-                        continue;
-                    }
-
-                    Car Car1=new Car(id,plate,brand,type,model,year,color,status);
-
-                    Cars.addCar(Car1);
-
-                }
-
-            }
-
-        }
-
-        catch (IOException e) {
-            System.out.println("Error Reading vehicles.csv");
-        }
-
-        return Cars;
-
-    }
-
-    public RentingManager readRentals(CarManager carManager,CustomerManager customerManager,EmployeeManager employeeManager) {
-
-        RentingManager Rentals=new RentingManager();
-
-        try (BufferedReader reader=new BufferedReader(new FileReader("rentals.csv"))) {
-
-            reader.readLine();
-
-            String line;
-
-            while ((line=reader.readLine())!=null) {
-
-                String[] parts=line.split(",",6);
-
-                if (parts.length==6) {
-                    String code=parts[0].trim();
-                    String carPlate=parts[1].trim();
-                    String customerAfm =parts[2].trim();
-                    String startdate=parts[3].trim();
-                    String enddate=parts[4].trim();
-                    String employeeUsername=parts[5].trim();
-
-                    Car car=carManager.searchByPlate(carPlate);
-                    Customer customer=customerManager.searchByAfm(customerAfm);
-                    Employee employee = employeeManager.searchByUsername(employeeUsername);
-
-                    if (car==null || customer==null || employee==null) {
-                        continue;
-                    }
-
-                    Renting Rental1=new Renting(code,car,customer,startdate,enddate,employee);
-
-                    Rentals.addRenting(Rental1);
-
-                }
-
-            }
-
-        }
-
-        catch (IOException e) {
-            System.out.println("Error Reading rentals.csv");
-        }
-
-        return Rentals;
-
-    }
-
-    public void writeVehicles(CarManager carsToWrite) {
-
-        try (BufferedWriter writer=new BufferedWriter(new FileWriter("vehicles.csv"))) {
-
-            writer.write("id,plate,brand,type,model,year,color,status");
-            writer.newLine();
-
-            for (Car c:carsToWrite.getAllCars()) {
-
-                writer.write(c.getId().trim() + "," + c.getPlate().trim() + "," + c.getBrand().trim() + "," + c.getType().trim() + "," + c.getModel().trim() + "," + c.getYear().trim() + "," + c.getColor().trim() + "," + c.getStatus().trim());
-                writer.newLine();
-
-            }
-
-        }
-
-        catch (IOException e) {
-            System.out.println("Error Writing vehicles.csv");
-        }
-
-    }
-
-    public void writeRentals(RentingManager rentalsToWrite) {
-
-        try (BufferedWriter writer=new BufferedWriter(new FileWriter("rentals.csv"))) {
-
-            writer.write("code,carPlate,customerAfm,startdate,enddate,employeeUsername");
-            writer.newLine();
-
-            for (Renting r:rentalsToWrite.getAllRentings()) {
-
-                writer.write(r.getCode().trim() + "," + r.getCar().getPlate().trim() + "," + r.getCustomer().getAfm().trim() + "," + r.getStartdate().trim() + "," + r.getEnddate().trim() + "," + r.getEmployee().getUsername().trim());
-                writer.newLine();
-
-            }
-
-        }
-
-        catch (IOException e) {
-            System.out.println("Error Writing rentals.csv");
-        }
-
-    }
-
-    public boolean initializeVehicles() {
-
-        File file=new File("vehicles.csv");
-
-        try {
-
-            if (file.exists() && file.length()>0) {
-                System.out.println("vehicles.csv already exists.");
-                return false;
-            }
-
-            System.out.println("Initializing vehicles.csv");
-
-            CarManager CM1=new CarManager();
-
-            CM1.addCar(new Car("1","IKY1234","Toyota","Sedan","Corolla","2019","Silver","Available"));
-
-            CM1.addCar(new Car("2","NBP5678","Honda","Hatchback","Civic","2020","Blue","Available"));
-
-            CM1.addCar(new Car("3","RTL9012","Ford","SUV","Focus","2021","Black","Available"));
-
-            CM1.addCar(new Car("4","XZA3456","Volkswagen","Sedan","Passat","2018","White","Available"));
-
-            CM1.addCar(new Car("5","EMK7890","Nissan","Crossover","Qashqai","2022","Red","Available"));
-
-            writeVehicles(CM1);
-
-            return true;
-
-        }
-
-        catch (Exception e) {
-            System.out.println("Error initializing vehicles.csv");
-            return false;
-        }
-
-    }
-
-    public boolean initializeRentals() {
-
-        File file=new File("rentals.csv");
-
-        try {
-
-            if (file.exists() && file.length()>0) {
-                System.out.println("rentals.csv already exists.");
-                return false;
-            }
-
-            System.out.println("Initializing rentals.csv");
-
-            RentingManager RM1=new RentingManager();
-
-            writeRentals(RM1);
-
-            return true;
-
-        }
-
-        catch (Exception e) {
-            System.out.println("Error initializing rentals.csv");
-            return false;
-        }
-    }
-
  }
 
 

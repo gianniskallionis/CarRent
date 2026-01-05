@@ -1,7 +1,9 @@
+package api;
+
 import java.util.HashMap;
 import java.util.ArrayList;
 /**
- * EmployeeManager
+ * Api.EmployeeManager
  * <p>
  * the log in and other stuff happen here
  *
@@ -80,20 +82,25 @@ wrong_password;
      * normalized password of the argument . if they are, then it goes through and the CurrentUser in the application becomes the one we are
      * dealing with right now.if it doesnt go through then a wrong_password  return status occurs and  current user is set to null
      *   logins.get(emp1.getUsername()).trim().toLowerCase() is the key normalized
-     * @param emp1 the argument , its an instance of employee used to try to Log him into the application
+     * @param  username ,
+     * @param password , the 2 strings used to attempt the login
      * @return if the return is wrong username  then it means there is an error concerning the username. same with the wrong password
      * if the return status is success then  all went well
      */
-    public loginStatus loginUser(Employee emp1) {
-        if ( emp1==null || searchByUsername(emp1.getUsername()) == null)
+    public loginStatus loginUser(String username,String password) {
+        if ( username==null ||  username.trim().isEmpty() )
         {currentUser=null;
 return loginStatus.wrong_username;   }// failsafe gia an einai valid to username
 
-        String key=emp1.getUsername().trim().toLowerCase();
-if (  employeesByUsername.get(key)==null ||employeesByUsername.get(key).getPassword() ==null || emp1.getPassword()==null || ! employeesByUsername.get(key).getPassword().equals(emp1.getPassword())  )  // lathos kwdikos
+        String key=username.trim().toLowerCase();
+        Employee emp = employeesByUsername.get(key);
+        if (emp == null) {
+            currentUser = null;
+            return loginStatus.wrong_username;}
+        if (emp.getPassword() == null || password == null || !emp.getPassword().equals(password))
 {currentUser=null;
     return loginStatus.wrong_password;}
-currentUser=employeesByUsername.get(key);
+currentUser=emp;
 return loginStatus.success;
 }
 

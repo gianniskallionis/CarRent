@@ -1,3 +1,5 @@
+package api;
+
 import java.util.Objects;
 
 
@@ -7,7 +9,6 @@ public class Car {
     private String id;
     private String plate;
     private String brand;
-    private String type;
     private String model;
     private String year;
     private String color;
@@ -23,10 +24,6 @@ public class Car {
 
     public String getBrand() {
         return brand;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getModel() {
@@ -64,12 +61,6 @@ public class Car {
         this.brand=brand.trim();
     }
 
-    public void setType(String type) {
-        if (type==null) throw new IllegalArgumentException(("null type"));
-        if (type.isEmpty()) throw new IllegalArgumentException("type is empty;");
-        this.type=type.trim();
-    }
-
     public void setModel(String model) {
         if (model==null) throw new IllegalArgumentException(("null model"));
         if (model.isEmpty()) throw new IllegalArgumentException("model is empty;");
@@ -94,11 +85,10 @@ public class Car {
         this.status=status.trim();
     }
 
-    public Car(String id, String plate, String brand, String type, String model, String year, String color, String status) {
+    public Car(String id, String plate, String brand, String model, String year, String color, String status) {
         setId(id);
         setPlate(plate);
         setBrand(brand);
-        setType(type);
         setModel(model);
         setYear(year);
         setColor(color);
@@ -140,7 +130,7 @@ public class Car {
     }
 
     public String toString() {
-        return String.format("Car [ id= %s, plate= %s, brand=  %s, type= %s, model= %s, year= %s, color= %s, status= %s ]",getId(),getPlate(),getBrand(),getModel(),getYear(),getColor(),getStatus());
+        return String.format("Api.Car [ id= %s, plate= %s, brand=  %s, model= %s, year= %s, color= %s, status= %s ]",getId(),getPlate(),getBrand(),getModel(),getYear(),getColor(),getStatus());
     }
 
 }

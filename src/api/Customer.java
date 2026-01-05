@@ -1,3 +1,5 @@
+package api;
+
 import java.util.Objects;
 
 /**
@@ -10,7 +12,7 @@ public class Customer extends Person {
     private String number;
 
     /**
-     * returns the Afm of the Customer
+     * returns the Afm of the Api.Customer
      *
      * @return the Afm
      */
@@ -99,7 +101,7 @@ public class Customer extends Person {
     }
 
     public String toString() {
-        return String.format("Customer [name= %s, Surname= %s, email= %s, Afm= %s, phone=%s ]",
+        return String.format("Api.Customer [name= %s, Surname= %s, email= %s, Afm= %s, phone=%s ]",
                 getName(), getSurname(), getEmail(), getAfm(), getNumber());
     }
 
