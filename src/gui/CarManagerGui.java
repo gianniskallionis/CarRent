@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class CarManagerGui {
 
-    public CarManagerGui(CarManager carManager, RentingManager rentingManager) {
+    public CarManagerGui(CarManager carManager) {
 
         JFrame parentFrame = new JFrame("Car Manager");
         parentFrame.setSize(900, 400);
@@ -59,19 +59,36 @@ public class CarManagerGui {
             dialog.add(buttons, BorderLayout.SOUTH);
 
             add.addActionListener(ev -> {
-                try {
-                    Car car = new Car(idField.getText().trim(), plateField.getText().trim(), brandField.getText().trim(), typeField.getText().trim(), modelField.getText().trim(), yearField.getText().trim(), colorField.getText().trim(), statusField.getText().trim());
+                String id = idField.getText().trim();
+                String plate = plateField.getText().trim();
+                String brand = brandField.getText().trim();
+                String type = typeField.getText().trim();
+                String model = modelField.getText().trim();
+                String year = yearField.getText().trim();
+                String color = colorField.getText().trim();
+                String status = statusField.getText().trim();
 
-                    if (carManager.addCar(car)) {
-                        dialog.dispose();
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(dialog, "Car already exists or invalid data");
-                    }
+                if (id.isEmpty() || plate.isEmpty() || brand.isEmpty() || type.isEmpty() ||
+                        model.isEmpty() || year.isEmpty() || color.isEmpty() || status.isEmpty()) {
+                    JOptionPane.showMessageDialog(dialog, "All fields are required!", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
-                catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dialog, "Invalid input: " + ex.getMessage());
+
+                try {
+                    Car car = new Car(id, plate, brand, type, model, year, color, status);
+                    if (carManager.addCar(car)) {
+                        JOptionPane.showMessageDialog(dialog, "Car added successfully!", "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        dialog.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(dialog,
+                                "Car could not be added. Plate might already exist.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(dialog, "Error: " + ex.getMessage(), "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             });
 
@@ -114,20 +131,64 @@ public class CarManagerGui {
             dialog.add(buttons, BorderLayout.SOUTH);
 
             search.addActionListener(ev -> {
-                Car car = carManager.searchCombined(
-                        emptyToNull(plateField.getText()),
-                        emptyToNull(brandField.getText()),
-                        emptyToNull(modelField.getText()),
-                        emptyToNull(colorField.getText()),
-                        emptyToNull(statusField.getText())
-                );
+                // Αναζήτηση με φιλτράρισμα στον client-side
+                ArrayList<Car> allCars = carManager.getAllCars();
+                ArrayList<Car> results = new ArrayList<>();
 
-                if (car == null) {
-                    JOptionPane.showMessageDialog(dialog, "No car found");
+                String plate = emptyToNull(plateField.getText());
+                String brand = emptyToNull(brandField.getText());
+                String model = emptyToNull(modelField.getText());
+                String color = emptyToNull(colorField.getText());
+                String status = emptyToNull(statusField.getText());
+
+                for (Car car : allCars) {
+                    boolean matches = true;
+
+                    if (plate != null && !car.getPlate().toLowerCase().contains(plate.toLowerCase())) {
+                        matches = false;
+                    }
+                    if (brand != null && !car.getBrand().toLowerCase().contains(brand.toLowerCase())) {
+                        matches = false;
+                    }
+                    if (model != null && !car.getModel().toLowerCase().contains(model.toLowerCase())) {
+                        matches = false;
+                    }
+                    if (color != null && !car.getColor().toLowerCase().contains(color.toLowerCase())) {
+                        matches = false;
+                    }
+                    if (status != null && !car.getStatus().toLowerCase().contains(status.toLowerCase())) {
+                        matches = false;
+                    }
+
+                    if (matches) {
+                        results.add(car);
+                    }
                 }
-                else
-                {
-                    showCarInfo(parentFrame, car);
+
+                if (results.isEmpty()) {
+                    JOptionPane.showMessageDialog(dialog, "No cars found matching criteria");
+                } else {
+                    // Δημιουργία JTable με τα αποτελέσματα
+                    String[] cols = {"ID", "Plate", "Brand", "Type", "Model", "Year", "Color", "Status"};
+                    Object[][] data = new Object[results.size()][8];
+
+                    for (int i = 0; i < results.size(); i++) {
+                        Car c = results.get(i);
+                        data[i] = new Object[]{
+                                c.getId(), c.getPlate(), c.getBrand(),
+                                c.getType(), c.getModel(), c.getYear(),
+                                c.getColor(), c.getStatus()
+                        };
+                    }
+
+                    JTable table = new JTable(data, cols);
+                    JScrollPane scrollPane = new JScrollPane(table);
+
+                    JDialog resultsDialog = new JDialog(parentFrame, "Search Results", true);
+                    resultsDialog.setSize(900, 400);
+                    resultsDialog.setLocationRelativeTo(parentFrame);
+                    resultsDialog.add(scrollPane);
+                    resultsDialog.setVisible(true);
                 }
             });
 
@@ -171,6 +232,51 @@ public class CarManagerGui {
         });
 
         parentFrame.setVisible(true);
+        // EDIT CAR BUTTON--------------------------------------
+        JButton editCarButton = new JButton("Edit Car");
+        panel.add(editCarButton);
+
+        editCarButton.addActionListener(e -> {
+            JDialog dialog = new JDialog(parentFrame, "Edit Car", true);
+            dialog.setLayout(new BorderLayout());
+            dialog.setLocationRelativeTo(parentFrame);
+
+            JPanel form = new JPanel(new GridLayout(1, 2, 10, 10));
+            JLabel plateLabel = new JLabel("Enter Plate to edit:");
+            JTextField plateField = new JTextField(10);
+            form.add(plateLabel);
+            form.add(plateField);
+
+            dialog.add(form, BorderLayout.CENTER);
+
+            JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            JButton loadButton = new JButton("Load");
+            JButton cancelButton = new JButton("Cancel");
+            buttons.add(loadButton);
+            buttons.add(cancelButton);
+            dialog.add(buttons, BorderLayout.SOUTH);
+
+            loadButton.addActionListener(ev -> {
+                String plate = plateField.getText().trim();
+                if (plate.isEmpty()) {
+                    JOptionPane.showMessageDialog(dialog, "Plate cannot be empty!");
+                    return;
+                }
+
+                Car car = carManager.searchByPlate(plate);
+                if (car == null) {
+                    JOptionPane.showMessageDialog(dialog, "Car not found!");
+                    return;
+                }
+
+                openEditDialog(parentFrame, carManager, car);
+                dialog.dispose();
+            });
+
+            cancelButton.addActionListener(ev -> dialog.dispose());
+            dialog.pack();
+            dialog.setVisible(true);
+        });
     }
 
     // HELPERS-----------------------------------------------------------
@@ -199,6 +305,74 @@ public class CarManagerGui {
         panel.add(new JLabel("Status:")); panel.add(new JLabel(car.getStatus()));
 
         dialog.add(panel);
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+    private void openEditDialog(JFrame parent, CarManager carManager, Car car) {
+        JDialog dialog = new JDialog(parent, "Edit Car: " + car.getPlate(), true);
+        dialog.setLayout(new BorderLayout());
+        dialog.setLocationRelativeTo(parent);
+
+        JPanel form = new JPanel(new GridLayout(8, 2, 10, 10));
+
+        JTextField idField = new JTextField(car.getId());
+        JTextField plateField = new JTextField(car.getPlate());
+        JTextField brandField = new JTextField(car.getBrand());
+        JTextField typeField = new JTextField(car.getType());
+        JTextField modelField = new JTextField(car.getModel());
+        JTextField yearField = new JTextField(car.getYear());
+        JTextField colorField = new JTextField(car.getColor());
+        JTextField statusField = new JTextField(car.getStatus());
+
+        addRow(form, "ID:", idField);
+        addRow(form, "Plate:", plateField);
+        addRow(form, "Brand:", brandField);
+        addRow(form, "Type:", typeField);
+        addRow(form, "Model:", modelField);
+        addRow(form, "Year:", yearField);
+        addRow(form, "Color:", colorField);
+        addRow(form, "Status:", statusField);
+
+        dialog.add(form, BorderLayout.CENTER);
+
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton saveButton = new JButton("Save");
+        JButton cancelButton = new JButton("Cancel");
+        buttons.add(saveButton);
+        buttons.add(cancelButton);
+        dialog.add(buttons, BorderLayout.SOUTH);
+
+        saveButton.addActionListener(ev -> {
+            String id = idField.getText().trim();
+            String plate = plateField.getText().trim();
+            String brand = brandField.getText().trim();
+            String type = typeField.getText().trim();
+            String model = modelField.getText().trim();
+            String year = yearField.getText().trim();
+            String color = colorField.getText().trim();
+            String status = statusField.getText().trim();
+
+            if (id.isEmpty() || plate.isEmpty() || brand.isEmpty() || type.isEmpty() ||
+                    model.isEmpty() || year.isEmpty() || color.isEmpty() || status.isEmpty()) {
+                JOptionPane.showMessageDialog(dialog, "All fields are required!", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Car updatedCar = new Car(id, plate, brand, type, model, year, color, status);
+
+            if (carManager.updateCar(car.getPlate(), updatedCar)) {
+                JOptionPane.showMessageDialog(dialog, "Car updated successfully!", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+                dialog.dispose();
+            } else {
+                JOptionPane.showMessageDialog(dialog,
+                        "Car could not be updated. The new plate might already exist.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        cancelButton.addActionListener(ev -> dialog.dispose());
         dialog.pack();
         dialog.setVisible(true);
     }

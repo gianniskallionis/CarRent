@@ -154,5 +154,30 @@ public class CarManager {
     public ArrayList<Car> getAllCars() {
         return new ArrayList<>(carsList);
     }
+    public boolean removeCar(String plate) {
+        if (plate == null) return false;
+        for (int i = 0; i < carsList.size(); i++) {
+            if (carsList.get(i).getPlate().trim().equalsIgnoreCase(plate.trim())) {
+                carsList.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean updateCar(String oldPlate, Car updatedCar) {
+        if (oldPlate == null || updatedCar == null) return false;
+
+        if (!oldPlate.trim().equalsIgnoreCase(updatedCar.getPlate().trim())) {
+            if (searchByPlate(updatedCar.getPlate()) != null) {
+                return false;
+            }
+        }
+
+        if (!removeCar(oldPlate)) {
+            return false;
+        }
+        return addCar(updatedCar);
+    }
 
 }
