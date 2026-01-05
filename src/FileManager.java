@@ -129,22 +129,23 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
             while ((line=reader.readLine())!=null) {
 
-                String[] parts=line.split(",",7);
+                String[] parts=line.split(",",8);
 
-                if (parts.length==7) {
+                if (parts.length==) {
                     String id=parts[0].trim();
                     String plate=parts[1].trim();
                     String brand=parts[2].trim();
-                    String model=parts[3].trim();
-                    String year=parts[4].trim();
-                    String color=parts[5].trim();
-                    String status=parts[6].trim();
+                    String type=parts[3].trim();
+                    String model=parts[4].trim();
+                    String year=parts[5].trim();
+                    String color=parts[6].trim();
+                    String status=parts[7].trim();
 
                     if (Cars.searchByPlate(plate)!=null) {
                         continue;
                     }
 
-                    Car Car1=new Car(id,plate,brand,model,year,color,status);
+                    Car Car1=new Car(id,plate,brand,type,model,year,color,status);
 
                     Cars.addCar(Car1);
 
@@ -214,12 +215,12 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
         try (BufferedWriter writer=new BufferedWriter(new FileWriter("vehicles.csv"))) {
 
-            writer.write("id,plate,brand,model,year,color,status");
+            writer.write("id,plate,brand,type,model,year,color,status");
             writer.newLine();
 
             for (Car c:carsToWrite.getAllCars()) {
 
-                writer.write(c.getId().trim() + "," + c.getPlate().trim() + "," + c.getBrand().trim() + "," + c.getModel().trim() + "," + c.getYear().trim() + "," + c.getColor().trim() + "," + c.getStatus().trim());
+                writer.write(c.getId().trim() + "," + c.getPlate().trim() + "," + c.getBrand().trim() + "," + c.getType().trim() + "," + c.getModel().trim() + "," + c.getYear().trim() + "," + c.getColor().trim() + "," + c.getStatus().trim());
                 writer.newLine();
 
             }
@@ -254,6 +255,70 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     }
 
+    public boolean initializeVehicles() {
+
+        File file=new File("vehicles.csv");
+
+        try {
+
+            if (file.exists() && file.length()>0) {
+                System.out.println("vehicles.csv already exists.");
+                return false;
+            }
+
+            System.out.println("Initializing vehicles.csv");
+
+            CarManager CM1=new CarManager();
+
+            CM1.addCar(new Car("1","IKY1234","Toyota","Sedan","Corolla","2019","Silver","Available"));
+
+            CM1.addCar(new Car("2","NBP5678","Honda","Hatchback","Civic","2020","Blue","Available"));
+
+            CM1.addCar(new Car("3","RTL9012","Ford","SUV","Focus","2021","Black","Available"));
+
+            CM1.addCar(new Car("4","XZA3456","Volkswagen","Sedan","Passat","2018","White","Available"));
+
+            CM1.addCar(new Car("5","EMK7890","Nissan","Crossover","Qashqai","2022","Red","Available"));
+
+            writeVehicles(CM1);
+
+            return true;
+
+        }
+
+        catch (Exception e) {
+            System.out.println("Error initializing vehicles.csv");
+            return false;
+        }
+
+    }
+
+    public boolean initializeRentals() {
+
+        File file=new File("rentals.csv");
+
+        try {
+
+            if (file.exists() && file.length()>0) {
+                System.out.println("rentals.csv already exists.");
+                return false;
+            }
+
+            System.out.println("Initializing rentals.csv");
+
+            RentingManager RM1=new RentingManager();
+
+            writeRentals(RM1);
+
+            return true;
+
+        }
+
+        catch (Exception e) {
+            System.out.println("Error initializing rentals.csv");
+            return false;
+        }
+    }
 
  }
 

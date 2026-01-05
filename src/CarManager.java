@@ -11,7 +11,7 @@ public class CarManager {
     public Car searchByPlate(String plate) {
 
         if (plate==null) {
-            return null;
+            return nullnew;
         }
 
         for (Car c:carsList) {
