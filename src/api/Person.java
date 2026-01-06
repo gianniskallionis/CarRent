@@ -3,7 +3,9 @@ package api;
 /**
  * Api.Person
  * <p>
- * Σύντομη περιγραφή της κλάσης Api.Person.
+ * Σύντομη περιγραφή της κλάσης Api.Person. IT is a class created for Inheritance purposes. it has 3 string fields. name,
+ * surname and email that both Employee and Customer classes Inherit.  it creates setters and getters for each and a basic constructor
+ * giving the method the value of the parameter string .
  *
  * @author giannis
  * @version 05-Dec-25
@@ -15,14 +17,14 @@ public abstract  class Person {
     private String surname;
     private String email;
     /**
-     * gets the name
+     * returns the current  name
      * @return the name of the employee
      */
     public String getName() {
         return name;
     }
     /**
-     * sets the name
+     * sets the name from the string of the parameter
      * @param name , the name
      */
     public void setName(String name) {
@@ -32,12 +34,12 @@ public abstract  class Person {
         this.name = name.trim();
     }
     /**
-     * gets the surname
+     * returns  the  current surname
      * @return the surname
      */
     public String getSurname() {return surname;}
     /**
-     * sets the surname
+     * sets the surname from the string of the parameter
      * @param surname is the surname
      */
     public void setSurname(String surname) {
@@ -46,14 +48,14 @@ public abstract  class Person {
         this.surname = surname.trim();
     }
     /**
-     * gets the email
+     * returns  the current  email
      * @return the email
      */
     public String getEmail() {
         return email;
     }
     /**
-     * sets the email
+     * sets   the email from the string of the parameter
      * @param email the email
      */
     public void setEmail(String email) {
@@ -64,7 +66,7 @@ public abstract  class Person {
         this.email = email.trim();
     }
 
-    /** Constructor that sets the fields of the class
+    /** Constructor that sets the fields of the class from the strings of the parameters
      * @param name  the name
      * @param surname the surname
      * @param email the email

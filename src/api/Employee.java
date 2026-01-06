@@ -2,7 +2,8 @@ package api;
 
 import java.util.Objects;
 
-/**
+/** a class that inherits from Person and adds 2 strings as fields. username and password . it has getters and setters
+ * for each and a constructor giving each String a value from the given parameter. an Employee is also a user
  *
  */
 public class Employee extends Person {
@@ -13,7 +14,7 @@ public class Employee extends Person {
 // ftiakse to login me hashtable
 
     /**
-     * gets the username
+     * returns  the current  username
      * @return the username
      */
     public String getUsername() {
@@ -21,7 +22,7 @@ public class Employee extends Person {
     }
 
     /**
-     * sets the username
+     * gives value  to the username from the parameter
      * @param username the username
      */
     public void setUsername(String username) {
@@ -32,7 +33,7 @@ public class Employee extends Person {
 
 
     /**
-     * gets the password of the employee
+     * returns the  current password of the employee
      * @return the password
      */
     public String getPassword() {
@@ -40,7 +41,7 @@ public class Employee extends Person {
     }
 
     /**
-     * sets the password of the employee
+     * gives value  to the password from the parameter
      * @param password the password
      */
     public void setPassword(String password) {
@@ -70,6 +71,15 @@ public class Employee extends Person {
        setPassword((password));
     }
 
+
+
+    /**
+     * Compares this employee with another object for equality.
+     * Two employees are equal if they have the same username
+     *
+     * @param obj the object to compare with
+     * @return true if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj==null ) return false;
@@ -81,13 +91,23 @@ public class Employee extends Person {
         if(this.username==null ||employeeTemp.username==null) return false;
         return (Objects.equals(this.username.toLowerCase(), employeeTemp.username.toLowerCase()));
     }
-
+    /**
+     * Returns a hash code value for this employee.
+     * The hash code is based on the username
+     *
+     * @return the hash code value
+     */
     @Override
     public int hashCode() {
         if (username==null) return 0;
         return Objects.hash(username.toLowerCase());
     }
-
+    /**
+     * Returns a string representation of this employee.
+     * Format: "Api.Employee [name=..., surname=..., username=..., email=...]"
+     *
+     * @return string representation of the employee
+     */
     public String toString() {
         return String.format("Api.Employee [name= %s,surname=  %s,username= %s, email = %s ]"
                                      ,getName(),getSurname(),getUsername() ,getEmail()       );

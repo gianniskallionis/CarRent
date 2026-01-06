@@ -2,9 +2,16 @@ package api;
 
 import java.io.*;
 
+/**
+ * is is responsible for the full communication between the classes and their csv files it has multiple read and write
+ * methods for each class
+ */
 public class FileManager {
 
-
+    /**
+     * reads customers from the file and stores them in the customermanager list
+     * @return the customer manager list
+     */
     public CustomerManager readCustomers(){
         CustomerManager Customers = new CustomerManager(); // list of which i will read from
         try(BufferedReader reader = new BufferedReader(new FileReader ("customers.csv")  )  ) // opens file
@@ -24,6 +31,10 @@ reader.readLine();// ignores the 1st line as they are the formation: Afm,name,su
  catch (IOException e){System.out.println("Error  Reading in customers.csv");}
         return Customers;}
 
+    /**
+     * write customers as arguments into the files
+     * @param CustomersToWrite the customer that must be writen into the file
+     */
     public  void writeCustomers(CustomerManager CustomersToWrite){
         try (BufferedWriter writer = new BufferedWriter(    (new FileWriter("customers.csv")   )    )     )// opens file to write with writer
         {
@@ -36,7 +47,10 @@ writer.newLine();//  goes to the next line for the next batch of writing
 }
 catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 }
-
+    /**
+     * reads employees from the file and stores them in the employees manager list
+     * @return the employees manager list
+     */
   public EmployeeManager readEmployees() {
       EmployeeManager users = new EmployeeManager(); // hashmap of which i will read from
       try (BufferedReader reader = new BufferedReader((new FileReader("employees.csv")))) {
@@ -56,7 +70,10 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
       } catch (IOException e) {System.out.println("Error  Reading in employees.csv");}
       return users;
   }
-
+    /**
+     * write Employees as arguments into the files
+     * @param UsersToWrite the customer that must be writen into the file
+     */
   public void writeEmployees(EmployeeManager UsersToWrite){
       try (BufferedWriter writer = new BufferedWriter(    (new FileWriter("employees.csv")   )    )     )// opens file to write with writer
       {
@@ -97,6 +114,11 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
           return false;
       }
     }
+
+    /**
+     * initializes the employees file with data
+     * @return true if success, false if failed
+     */
  public boolean initializeEmployees(){
       File file=new File("employees.csv");
  try {
@@ -118,7 +140,10 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
  } catch(Exception e) {System.out.println("Error in employees.csv file "); return false;}
      }
      //-----------------------------------------------------------------------------------------------------------------------------
-
+    /**
+     * reads vehicles  from the file and stores them in the car manager list
+     * @return the car manager list
+     */
      public CarManager readVehicles() {
 
         CarManager Cars=new CarManager();
@@ -165,6 +190,13 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     }
 
+    /**
+     * reads from the file the rentals  , it stores them into a rental manager it returns
+     * @param carManager instance of carmanager
+     * @param customerManager instance of customer manager
+     * @param employeeManager instance of employee manager
+     * @return the rental manager
+     */
     public RentalManager readRentals(CarManager carManager, CustomerManager customerManager, EmployeeManager employeeManager) {
 
         RentalManager Rentals=new RentalManager();
@@ -212,7 +244,10 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
         return Rentals;
 
     }
-
+    /**
+     * write Employees as arguments into the files
+     * @param carsToWrite the customer that must be writen into the file
+     */
     public void writeVehicles(CarManager carsToWrite) {
 
         try (BufferedWriter writer=new BufferedWriter(new FileWriter("vehicles.csv"))) {
@@ -236,7 +271,10 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
         }
 
     }
-
+    /**
+     * write rentals  as arguments into the files
+     * @param rentalsToWrite the rental  that must be writen into the file
+     */
     public void writeRentals(RentalManager rentalsToWrite) {
 
         try (BufferedWriter writer=new BufferedWriter(new FileWriter("rentals.csv"))) {
@@ -260,6 +298,10 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     }
 
+    /**
+     * initializes the vehicles file with data
+     * @return true if success, false if failed
+     */
     public boolean initializeVehicles() {
 
         File file=new File("vehicles.csv");
@@ -298,6 +340,10 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     }
 
+    /**
+     * initializes the rentals file  with data
+     * @return true if success, false if failed
+     */
     public boolean initializeRentals() {
 
         File file=new File("rentals.csv");

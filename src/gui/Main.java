@@ -2,7 +2,7 @@ package gui;
 
 import api.*;
 
-/**
+/**  it initializes the files ,and it  calls loginFrame class to start the app
  *
  */
 public class Main {

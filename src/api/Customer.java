@@ -2,7 +2,8 @@ package api;
 
 import java.util.Objects;
 
-/**
+/** a class that inherits from Person and adds 2 strings as fields. afm and number . it has getters and setters
+ * for each and a constructor giving each String a value from the given parameter.
  *
  */
 public class Customer extends Person {
@@ -42,7 +43,7 @@ public class Customer extends Person {
     }
 
     /**
-     * sets the  phone number of the customer after checking wether the parameter is null or an empty string
+     * sets the  phone number of the customer after checking whether the parameter is null or an empty string
      *
      * @param number the new number
      */
@@ -90,9 +91,10 @@ public class Customer extends Person {
     }
 
     /**
-     * overrides the hashcode so every object that is equal has the same hashcode    z
+     * Returns a hash code value for this employee.
+     * The hash code is based on the username
      *
-     * @return the hashcode using the field afm to calculate it
+     * @return the hash code value
      */
 
     @Override
@@ -100,8 +102,13 @@ public class Customer extends Person {
         return Objects.hash(afm);
     }
 
+
+    /**Returns a string representation of this Customer.
+     * Format: "Api.Employee [name=..., surname=...,email=...,Afm=...,number=...]"
+     * @return string representation of the Customer
+     */
     public String toString() {
-        return String.format("Api.Customer [name= %s, Surname= %s, email= %s, Afm= %s, phone=%s ]",
+        return String.format("Api.Customer [name= %s, Surname= %s, email= %s, Afm= %s, number=%s ]",
                 getName(), getSurname(), getEmail(), getAfm(), getNumber());
     }
 

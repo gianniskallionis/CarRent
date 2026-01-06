@@ -3,9 +3,8 @@ package api;
 import java.util.HashMap;
 import java.util.ArrayList;
 /**
- * Api.EmployeeManager
- * <p>
- * the log in and other stuff happen here
+ * Api.EmployeeManager creates a  hashmap <string,employee> where  the key is the username and the value is the employee
+ * it stores the employees  in the hashmap
  *
  * @author giannis
  * @version 06-Dec-25
@@ -16,7 +15,9 @@ public class EmployeeManager {
 Employee currentUser;
 
 
-
+    /**
+     * the constructor of the class, it creates a new hashmap  allocating space in memory for it .
+     */
     public EmployeeManager() {
         employeesByUsername = new HashMap<>();
     }
@@ -90,7 +91,7 @@ wrong_password;
     public loginStatus loginUser(String username,String password) {
         if ( username==null ||  username.trim().isEmpty() )
         {currentUser=null;
-return loginStatus.wrong_username;   }// failsafe gia an einai valid to username
+return loginStatus.wrong_username;   }// failsafe for the username to be valid
 
         String key=username.trim().toLowerCase();
         Employee emp = employeesByUsername.get(key);
@@ -105,49 +106,63 @@ return loginStatus.success;
 }
 
 
-    /**
+    /** it logs out the user from the system
      *
      *
-     * @return
+     * @return true if the logout has been achieved, false if it has failed.
      */
     public boolean logoutUser(){
-if (currentUser!=null) // an egine me epityxia login tote currentuser=oxi null
+if (currentUser!=null) // if login was successful then  currentUser !=  null
 {
 currentUser=null;
-return true;}// etsi kanw logout;
+return true;}// if returns true we have logged out ;
     return false;
 }
 
+    /**
+     * returns the currentUser of the app;
+     * @return the currentUser , instance of Employee
+     */
     public Employee getCurrentUser() {
         return currentUser;
     }
 
 
-
-
-
-
+    /**
+     * searches through the hashmap with the email argument to find a match
+     * @param email1 the string used to search the map
+     * @return the instance of employee if found, otherwise null
+     */
     public Employee searchByEmail(String email1)
 {
     if (email1==null || email1.isEmpty() ) return null;
     String t2= email1.trim().toLowerCase();
-    for (Employee x:employeesByUsername.values()) // kanei iterate olo to hashmap logins<username,Employees>
+    for (Employee x:employeesByUsername.values()) //  iterates the whole hashmap logins<username,Employees>
     {
-        if(x.getEmail()== null ) continue; // αν το email toy stoixeiou tou logins == null, proxwraei ston epomeno
+        if(x.getEmail()== null ) continue; // if  email is null is skips to the next
         String t1=  x.getEmail().trim().toLowerCase();
         if (t1.equals(t2) )
         {return x;}
     }
-    return null;  // an den vrei employee me auto to email returns null
+    return null;  // if no employee is found
 }
 
-
+    /**searches in the hashmap for a match
+     *
+     * @param username1 uses the string to search all the usernames for a match
+     * @return the instance of the  employee matching the username , otherwise null or the argument is invalid or no employee
+     * is found
+     */
  public Employee searchByUsername(String username1)
  {
      if(username1==null || username1.trim().isEmpty()){return null;}
      return employeesByUsername.get(username1.trim().toLowerCase());
  }
 
+    /** creates a copy of all the employees and returns if in the form of an arraylist
+     *
+     * @return the new arraylist which is of type < Employee>
+     */
     public ArrayList<Employee> getAllEmployees() {
 
         return new ArrayList<>(employeesByUsername.values());
