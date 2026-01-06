@@ -45,7 +45,7 @@ JButton carManagementButton, customerManagementButton,
 
 
             customerManagementButton.addActionListener(e->{
-                    CustomerManagerGui customerManagerGui1=new CustomerManagerGui(this.customerManager, this.rentalManager);  });
+                    CustomerManagerGui customerManagerGui1=new CustomerManagerGui(this.customerManager, this.rentalManager,this.fileManager);  });
 
         carManagementButton.addActionListener(e -> {
             Employee currentUser = this.employeeManager.getCurrentUser();

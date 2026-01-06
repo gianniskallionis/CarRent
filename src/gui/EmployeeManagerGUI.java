@@ -13,7 +13,7 @@ public class EmployeeManagerGUI {
 
     public EmployeeManagerGUI(EmployeeManager employeeManager1,FileManager fileManager) {
         this.fileManager=fileManager;
-        JFrame ParentFrame = new JFrame("Welcome to Employee Manager ");
+        JFrame ParentFrame = new JFrame("Welcome to Users Management");
         ParentFrame.setSize(800, 400);
         ParentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ParentFrame.setLayout(new FlowLayout());

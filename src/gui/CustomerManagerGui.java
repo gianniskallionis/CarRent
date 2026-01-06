@@ -1,13 +1,15 @@
 package gui;
 import api.CustomerManager;
 import api.Customer;
+import api.FileManager;
 import api.RentalManager;
 import javax.swing.*;
 import java.awt.*;
 
 public class CustomerManagerGui {
-
-    public CustomerManagerGui(CustomerManager customerManager1, RentalManager rentalManager1) {
+private FileManager fileManager;
+    public CustomerManagerGui(CustomerManager customerManager1, RentalManager rentalManager1, FileManager fileManager) {
+        this.fileManager=fileManager;
         JFrame ParentFrame = new JFrame("Welcome to Customer Manager ");
         ParentFrame.setSize(800,400);
         ParentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -79,10 +81,13 @@ public class CustomerManagerGui {
     Customer c1=new Customer(afmTextField.getText().trim(),nameTextField.getText().trim(),surnameTextField.getText().trim(),numberTextField.getText().trim()
             ,emailTextField.getText().trim());
 
-     if (customerManager1.addCustomer(c1)){addCustomerDialog.dispose();}
+     if (customerManager1.addCustomer(c1)){
+         fileManager.writeCustomers(customerManager1);
+         addCustomerDialog.dispose();}
      else{JOptionPane.showMessageDialog(addCustomerDialog,"error Customer hasnt been added");}
 });
 cancelButton.addActionListener(e2->{  addCustomerDialog.dispose();  }); // closes the window
+ addCustomerDialog.pack();
  addCustomerDialog.setVisible(true);
         });// end of addCustomerButton
 
@@ -151,7 +156,8 @@ editCustomerButton.addActionListener(e -> {
                     return;}
 
                 if (customerManager1.editCustomer(afm,newName,newSurname,newNumber,newEmail)
-                ){editCustomerDialog.dispose();}
+                ){fileManager.writeCustomers(customerManager1);
+                    editCustomerDialog.dispose();}
                 else{JOptionPane.showMessageDialog(editCustomerDialog,"error Customer hasn't been edited");}
             });
             cancelButton.addActionListener(e2->{  editCustomerDialog.dispose();  }); // closes the window
@@ -220,14 +226,15 @@ panel.add(searchCustomerButton);
                  addRowToPanel(customerFoundPanel, "Surname:", c1.getSurname());
                  addRowToPanel(customerFoundPanel, "Number:", c1.getNumber());
                  addRowToPanel(customerFoundPanel, "Email:", c1.getEmail());
-                 customerFoundDialog.add(customerFoundPanel);
+                 customerFoundDialog.setLayout(new BorderLayout());
+                 customerFoundDialog.add(customerFoundPanel,BorderLayout.CENTER);
 
                  // CustomerFound Buttons START -----------
                  JPanel customerFoundButtonPanel= new JPanel(new FlowLayout(FlowLayout.RIGHT));
                  JButton customerFoundOkButton= new JButton("Ok");
                  customerFoundOkButton.addActionListener(e3->{customerFoundDialog.dispose();});
                  customerFoundButtonPanel.add(customerFoundOkButton);// button into panel
-                 customerFoundDialog.add(customerFoundButtonPanel); // panel into dialog
+                 customerFoundDialog.add(customerFoundButtonPanel,BorderLayout.SOUTH); // panel into dialog
                  customerFoundDialog.pack();
                  customerFoundDialog.setVisible(true);
              }
@@ -285,14 +292,15 @@ panel.add(searchCustomerButton);
                  addRowToPanel(customerFoundPanel, "Surname:", c1.getSurname());
                  addRowToPanel(customerFoundPanel, "Number:", c1.getNumber());
                  addRowToPanel(customerFoundPanel, "Email:", c1.getEmail());
-                 customerFoundDialog.add(customerFoundPanel);
+                 customerFoundDialog.setLayout(new BorderLayout());
+                 customerFoundDialog.add(customerFoundPanel,BorderLayout.CENTER);
 
                  // CustomerFound Buttons START -----------
                  JPanel customerFoundButtonPanel= new JPanel(new FlowLayout(FlowLayout.RIGHT));
                  JButton customerFoundOkButton= new JButton("Ok");
                  customerFoundOkButton.addActionListener(e3->{customerFoundDialog.dispose();});
                  customerFoundButtonPanel.add(customerFoundOkButton);
-                 customerFoundDialog.add(customerFoundButtonPanel);
+                 customerFoundDialog.add(customerFoundButtonPanel,BorderLayout.SOUTH);
                  customerFoundDialog.pack();
                  customerFoundDialog.setVisible(true);
              }
@@ -351,7 +359,8 @@ panel.add(searchCustomerButton);
                  addRowToPanel(customerFoundPanel, "Surname:", c1.getSurname());
                  addRowToPanel(customerFoundPanel, "Number:", c1.getNumber());
                  addRowToPanel(customerFoundPanel, "Email:", c1.getEmail());
-                 customerFoundDialog.add(customerFoundPanel);
+                 customerFoundDialog.setLayout(new BorderLayout());
+                 customerFoundDialog.add(customerFoundPanel,BorderLayout.CENTER);
 
                  // CustomerFound Buttons START -----------
                  JPanel customerFoundButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -360,7 +369,7 @@ panel.add(searchCustomerButton);
                      customerFoundDialog.dispose();
                  });
                  customerFoundButtonPanel.add(customerFoundOkButton);
-                 customerFoundDialog.add(customerFoundButtonPanel);
+                 customerFoundDialog.add(customerFoundButtonPanel,BorderLayout.SOUTH);
                  customerFoundDialog.pack();
                  customerFoundDialog.setVisible(true);
              }
@@ -410,6 +419,7 @@ panel.add(searchCustomerButton);
                             JOptionPane.WARNING_MESSAGE);
                     return;}
                 if (customerManager1.deleteCustomer(afm, rentalManager1)) {
+                    fileManager.writeCustomers(customerManager1);
                     JOptionPane.showMessageDialog(deleteCustomerDialog,
                             "Customer deleted ");
                     deleteCustomerDialog.dispose();
