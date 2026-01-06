@@ -54,7 +54,7 @@ JButton carManagementButton, customerManagementButton,
                 return;
             }
             new CarManagerGui(this.carManager, this.customerManager,
-                    this.rentalManager, currentUser);
+                    this.rentalManager, currentUser,this.fileManager);
         });
 
 
@@ -67,7 +67,7 @@ JButton carManagementButton, customerManagementButton,
                 JOptionPane.showMessageDialog(this.frame, "No user logged in!");
                 return;}
             new RentalManagerGui(this.carManager, this.customerManager,
-                    this.rentalManager, currentUser);});
+                    this.rentalManager, currentUser,this.fileManager);});
 
         usersManagementButton.addActionListener(e -> {
             new EmployeeManagerGUI(this.employeeManager,this.fileManager);});

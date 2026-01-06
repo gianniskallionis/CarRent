@@ -11,9 +11,10 @@ public class RentalManagerGui {
     private CustomerManager customerManager;
     private RentalManager rentalManager;
     private Employee currentUser;
+    private FileManager fileManager;
 
-
-    public RentalManagerGui(CarManager carManager, CustomerManager customerManager, RentalManager rentalManager, Employee currentUser) {
+    public RentalManagerGui(CarManager carManager, CustomerManager customerManager, RentalManager rentalManager, Employee currentUser
+            ,FileManager fileManager) {
 
         JFrame parentFrame = new JFrame("Welcome to Rental Manager");
         parentFrame.setSize(900, 400);
@@ -24,7 +25,7 @@ public class RentalManagerGui {
         this.customerManager = customerManager;
         this.rentalManager = rentalManager;
         this.currentUser = currentUser;
-
+        this.fileManager=fileManager;
         JPanel panel = new JPanel(new GridLayout(4, 1, 20, 20));
         parentFrame.add(panel);
 
@@ -93,6 +94,8 @@ public class RentalManagerGui {
 
                 Rental rental = new Rental("R" + System.currentTimeMillis(), car, customer, startDate, endDate, currentUser);
                 if (rentalManager.rentCar(rental)) {
+                    fileManager.writeRentals(rentalManager);
+                    fileManager.writeVehicles(carManager);
                     JOptionPane.showMessageDialog(newRentDialog, "Car rented successfully!");
                     newRentDialog.dispose();
                 } else {
@@ -147,6 +150,8 @@ public class RentalManagerGui {
                     return;}
 
                 if (rentalManager.returnCar(foundRental)) {
+                    fileManager.writeRentals(rentalManager);
+                    fileManager.writeVehicles(carManager);
                     JOptionPane.showMessageDialog(returnDialog, "Car returned successfully!");
                     returnDialog.dispose();
                 } else {

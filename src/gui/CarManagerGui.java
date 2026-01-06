@@ -11,14 +11,14 @@ public class CarManagerGui {
     private RentalManager rentalManager;
     private Employee currentUser;
     private CarManager carManager;
-
+    private FileManager fileManager;
     public CarManagerGui(CarManager carManager,CustomerManager customerManager,
-                         RentalManager rentalManager, Employee currentUser) {
+                         RentalManager rentalManager, Employee currentUser,FileManager fileManager ) {
         this.customerManager=customerManager;
         this.rentalManager=rentalManager;
         this.currentUser=currentUser;
         this.carManager=carManager;
-
+        this.fileManager = fileManager;
         JFrame parentFrame = new JFrame("Car Manager");
         parentFrame.setSize(900, 400);
         parentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -84,6 +84,7 @@ public class CarManagerGui {
                 try {
                     Car car = new Car(id, plate, brand, type, model, year, color, status);
                     if (carManager.addCar(car)) {
+                        fileManager.writeVehicles(carManager);
                         JOptionPane.showMessageDialog(dialog, "Car added successfully!", "Success",
                                 JOptionPane.INFORMATION_MESSAGE);
                         dialog.dispose();
@@ -113,17 +114,23 @@ public class CarManagerGui {
             dialog.setLayout(new BorderLayout());
             dialog.setLocationRelativeTo(parentFrame);
 
-            JPanel form = new JPanel(new GridLayout(5, 2, 10, 10));
+            JPanel form = new JPanel(new GridLayout(8, 2, 10, 10));
 
+            JTextField idField = new JTextField();
             JTextField plateField = new JTextField();
             JTextField brandField = new JTextField();
+            JTextField typeField = new JTextField();
             JTextField modelField = new JTextField();
+            JTextField yearField = new JTextField();
             JTextField colorField = new JTextField();
             JTextField statusField = new JTextField();
 
+            addRow(form, "ID:", idField);
             addRow(form, "Plate:", plateField);
             addRow(form, "Brand:", brandField);
+            addRow(form, "Type:", typeField);
             addRow(form, "Model:", modelField);
+            addRow(form, "Year:", yearField);
             addRow(form, "Color:", colorField);
             addRow(form, "Status:", statusField);
 
@@ -141,28 +148,40 @@ public class CarManagerGui {
                 ArrayList<Car> allCars = carManager.getAllCars();
                 ArrayList<Car> results = new ArrayList<>();
 
+                String id = emptyToNull(idField.getText());
                 String plate = emptyToNull(plateField.getText());
                 String brand = emptyToNull(brandField.getText());
+                String type = emptyToNull(typeField.getText());
                 String model = emptyToNull(modelField.getText());
+                String year = emptyToNull(yearField.getText());
                 String color = emptyToNull(colorField.getText());
                 String status = emptyToNull(statusField.getText());
 
                 for (Car car : allCars) {
                     boolean matches = true;
 
+                    if (id != null && !car.getId().toLowerCase().contains(id.toLowerCase())) {
+                        matches = false;
+                    }
                     if (plate != null && !car.getPlate().toLowerCase().contains(plate.toLowerCase())) {
                         matches = false;
                     }
                     if (brand != null && !car.getBrand().toLowerCase().contains(brand.toLowerCase())) {
                         matches = false;
                     }
+                    if (type != null && !car.getType().toLowerCase().contains(type.toLowerCase())) {
+                        matches = false;
+                    }
                     if (model != null && !car.getModel().toLowerCase().contains(model.toLowerCase())) {
+                        matches = false;
+                    }
+                    if (year != null && !car.getYear().toLowerCase().contains(year.toLowerCase())) {
                         matches = false;
                     }
                     if (color != null && !car.getColor().toLowerCase().contains(color.toLowerCase())) {
                         matches = false;
                     }
-                    if (status != null && !car.getStatus().toLowerCase().contains(status.toLowerCase())) {
+                    if (status != null && !car.getStatus().equalsIgnoreCase(status)) {
                         matches = false;
                     }
 
@@ -365,6 +384,7 @@ parentFrame.setVisible(true);
             Car updatedCar = new Car(id, plate, brand, type, model, year, color, status);
 
             if (carManager.updateCar(car.getPlate(), updatedCar)) {
+                fileManager.writeVehicles(carManager);
                 JOptionPane.showMessageDialog(dialog, "Car updated successfully!", "Success",
                         JOptionPane.INFORMATION_MESSAGE);
                 dialog.dispose();
