@@ -1,6 +1,6 @@
 package api;
 
-public class Renting {
+public class Rental {
 
     private String code;
     private Car car;
@@ -57,7 +57,7 @@ public class Renting {
         this.employee=employee;
     }
 
-    public Renting(String code, Car car, Customer customer, String startdate, String enddate, Employee employee) {
+    public Rental(String code, Car car, Customer customer, String startdate, String enddate, Employee employee) {
         setCode(code);
         setCar(car);
         setCustomer(customer);

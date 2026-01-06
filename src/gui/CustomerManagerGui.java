@@ -1,18 +1,18 @@
 package gui;
 import api.CustomerManager;
 import api.Customer;
-import api.RentingManager;
+import api.RentalManager;
 import javax.swing.*;
 import java.awt.*;
 
 public class CustomerManagerGui {
 
-    public CustomerManagerGui(CustomerManager customerManager1, RentingManager rentingManager1) {
+    public CustomerManagerGui(CustomerManager customerManager1, RentalManager rentalManager1) {
         JFrame ParentFrame = new JFrame("Welcome to Customer Manager ");
         ParentFrame.setSize(800,400);
-        ParentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ParentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ParentFrame.setLayout(new FlowLayout());
-        JPanel panel= new JPanel(new GridLayout(2,2));// se auto to panel tha valoume ola ta buttons k to panel sto frame .
+        JPanel panel= new JPanel(new GridLayout(4,1,10,10));// se auto to panel tha valoume ola ta buttons k to panel sto frame .
         ParentFrame.add(panel);
 
         JButton addCustomerButton=new JButton("Add Customer");
@@ -409,7 +409,7 @@ panel.add(searchCustomerButton);
                     JOptionPane.showMessageDialog(deleteCustomerDialog, "AFM cannot be empty", "Input Error",
                             JOptionPane.WARNING_MESSAGE);
                     return;}
-                if (customerManager1.deleteCustomer(afm, rentingManager1)) {
+                if (customerManager1.deleteCustomer(afm, rentalManager1)) {
                     JOptionPane.showMessageDialog(deleteCustomerDialog,
                             "Customer deleted ");
                     deleteCustomerDialog.dispose();
@@ -420,93 +420,6 @@ panel.add(searchCustomerButton);
             cancelButton.addActionListener(e1 -> {deleteCustomerDialog.dispose();});
             deleteCustomerDialog.pack();
             deleteCustomerDialog.setVisible(true);
-        });
-// VIEW RENTAL HISTORY BUTTON ----------------------------------------------------------------------------------------
-        JButton viewRentalHistoryButton = new JButton("View Rental History");
-        panel.add(viewRentalHistoryButton);
-        viewRentalHistoryButton.addActionListener(e -> {
-            JDialog searchRentalHistoryDialog = new JDialog(ParentFrame, "View Rental History", true);
-            searchRentalHistoryDialog.setLayout(new BorderLayout());
-            searchRentalHistoryDialog.setLocationRelativeTo(ParentFrame);
-
-            JPanel searchRentalHistoryPanel = new JPanel(new GridLayout(1, 2, 10, 10));
-            searchRentalHistoryDialog.add(searchRentalHistoryPanel, BorderLayout.CENTER);
-
-            JLabel afmLabel = new JLabel("Enter Customer AFM:");
-            JTextField afmTextField = new JTextField(10);
-            searchRentalHistoryPanel.add(afmLabel);
-            searchRentalHistoryPanel.add(afmTextField);
-
-            // VIEW + CANCEL BUTTONS
-            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            JButton viewButton = new JButton("View");
-            JButton cancelButton = new JButton("Cancel");
-            buttonPanel.add(viewButton);
-            buttonPanel.add(cancelButton);
-            searchRentalHistoryDialog.add(buttonPanel, BorderLayout.SOUTH);
-
-            viewButton.addActionListener(e1 -> {
-                String afm = afmTextField.getText().trim();
-                if (afm.isEmpty()) {
-                    JOptionPane.showMessageDialog(searchRentalHistoryDialog,
-                            "AFM cannot be empty",
-                            "Input Error",
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-
-                Customer customer = customerManager1.searchByAfm(afm);
-                if (customer == null) {
-                    JOptionPane.showMessageDialog(searchRentalHistoryDialog,
-                            "Customer not found");
-                    return;}
-                java.util.ArrayList<api.Renting> rentals = rentingManager1.CustomerRentings(customer);
-                searchRentalHistoryDialog.dispose();
-
-                // RENTAL HISTORY DISPLAY DIALOG
-                JDialog rentalHistoryDialog = new JDialog(ParentFrame, "Rental History for " + customer.getName(), true);
-                rentalHistoryDialog.setLayout(new BorderLayout());
-                rentalHistoryDialog.setSize(900, 500);
-                rentalHistoryDialog.setLocationRelativeTo(ParentFrame);
-
-                if (rentals.isEmpty()) {
-                    JPanel noDataPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-                    noDataPanel.add(new JLabel("No rental history found for this customer."));
-                    rentalHistoryDialog.add(noDataPanel, BorderLayout.CENTER);
-                } else {
-                    // Create table data
-                    String[] columnNames = {"Rental ID", "Car Plate", "Brand", "Model", "Start Date", "End Date", "Status"};
-                    Object[][] data = new Object[rentals.size()][7];
-
-                    for (int i = 0; i < rentals.size(); i++) {
-                        api.Renting r = rentals.get(i);
-                        data[i][0] = r.getCode();
-                        data[i][1] = r.getCar().getPlate();
-                        data[i][2] = r.getCar().getBrand();
-                        data[i][3] = r.getCar().getModel();
-                        data[i][4] = r.getStartDate();
-                        data[i][5] = r.getEndDate();
-                        data[i][6] = r.getCar().getStatus();
-                    }
-
-                    JTable rentalTable = new JTable(data, columnNames);
-                    JScrollPane scrollPane = new JScrollPane(rentalTable);
-                    rentalHistoryDialog.add(scrollPane, BorderLayout.CENTER);
-                }
-
-                // CLOSE BUTTON
-                JPanel closeButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-                JButton closeButton = new JButton("Close");
-                closeButton.addActionListener(e2 -> {
-                    rentalHistoryDialog.dispose();});
-                closeButtonPanel.add(closeButton);
-                rentalHistoryDialog.add(closeButtonPanel, BorderLayout.SOUTH);
-                rentalHistoryDialog.setVisible(true);});
-
-            cancelButton.addActionListener(e1 -> {searchRentalHistoryDialog.dispose();});
-
-            searchRentalHistoryDialog.pack();
-            searchRentalHistoryDialog.setVisible(true);
         });
 
         ParentFrame.setVisible(true); // στο τελος του constructor panta to setVisisble

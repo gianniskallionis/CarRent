@@ -1,29 +1,35 @@
 package gui;
 
-import api.Car;
-import api.CarManager;
-import api.RentingManager;
+import api.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class CarManagerGui {
+    private CustomerManager customerManager;
+    private RentalManager rentalManager;
+    private Employee currentUser;
+    private CarManager carManager;
 
-    public CarManagerGui(CarManager carManager) {
+    public CarManagerGui(CarManager carManager,CustomerManager customerManager,
+                         RentalManager rentalManager, Employee currentUser) {
+        this.customerManager=customerManager;
+        this.rentalManager=rentalManager;
+        this.currentUser=currentUser;
+        this.carManager=carManager;
 
         JFrame parentFrame = new JFrame("Car Manager");
         parentFrame.setSize(900, 400);
-        parentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        parentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         parentFrame.setLayout(new FlowLayout());
 
-        JPanel panel = new JPanel(new GridLayout(2, 3, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(5, 1, 15, 15));
         parentFrame.add(panel);
 
         // ADD CAR----------------------------------------------
         JButton addCarButton = new JButton("Add Car");
         panel.add(addCarButton);
-
         addCarButton.addActionListener(e -> {
             JDialog dialog = new JDialog(parentFrame, "Add Car", true);
             dialog.setLayout(new BorderLayout());
@@ -197,11 +203,9 @@ public class CarManagerGui {
             dialog.pack();
             dialog.setVisible(true);
         });
-
         // VIEW ALLL CARS--------------------------------------
         JButton viewAllButton = new JButton("View All Cars");
         panel.add(viewAllButton);
-
         viewAllButton.addActionListener(e -> {
             ArrayList<Car> cars = carManager.getAllCars();
 
@@ -230,12 +234,10 @@ public class CarManagerGui {
 
             dialog.setVisible(true);
         });
-
         parentFrame.setVisible(true);
         // EDIT CAR BUTTON--------------------------------------
         JButton editCarButton = new JButton("Edit Car");
         panel.add(editCarButton);
-
         editCarButton.addActionListener(e -> {
             JDialog dialog = new JDialog(parentFrame, "Edit Car", true);
             dialog.setLayout(new BorderLayout());
@@ -277,8 +279,9 @@ public class CarManagerGui {
             dialog.pack();
             dialog.setVisible(true);
         });
-    }
 
+parentFrame.setVisible(true);
+    }
     // HELPERS-----------------------------------------------------------
 
     private void addRow(JPanel panel, String label, JTextField field) {

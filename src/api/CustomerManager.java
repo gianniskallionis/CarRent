@@ -100,11 +100,11 @@ public class CustomerManager {
      *
      *
      */
-    public boolean deleteCustomer(String afm, RentingManager rentingManager) {
+    public boolean deleteCustomer(String afm, RentalManager rentalManager) {
         Customer customer1 = searchByAfm(afm);
         if (customer1 == null) {
             return false;}
-        if (rentingManager != null && rentingManager.hasActiveRentalsForCustomer(customer1)) {
+        if (rentalManager != null && rentalManager.hasActiveRentalsForCustomer(customer1)) {
             return false; }
         customersList.remove(customer1);
         return true;}

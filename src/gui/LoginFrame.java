@@ -17,6 +17,7 @@ private EmployeeManager employeeManager1;
       JTextField usernameField= new JTextField(20);
       JPasswordField passwordField = new JPasswordField(20);
       JButton LoginButton =new JButton("Login");
+       frame.setLocationRelativeTo(null);
 frame.add(usernameLabel);
 frame.add(usernameField);
 frame.add(passwordLabel);
@@ -39,10 +40,10 @@ if (status== EmployeeManager.loginStatus.wrong_username) {
      FileManager fileManager = new FileManager();
      CarManager carManager = fileManager.readVehicles();
      CustomerManager customerManager = fileManager.readCustomers();
-     RentingManager rentingManager = fileManager.readRentals(carManager, customerManager, employeeManager1);
+     RentalManager rentalManager = fileManager.readRentals(carManager, customerManager, employeeManager1);
 
 
-     new MainMenuFrame(employeeManager1, customerManager, rentingManager, carManager);}
+     new MainMenuFrame(employeeManager1, customerManager, rentalManager, carManager,fileManager);}
 
 });
    }

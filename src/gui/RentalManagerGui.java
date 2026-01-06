@@ -6,34 +6,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class RentingManagerGui {
+public class RentalManagerGui {
     private CarManager carManager;
     private CustomerManager customerManager;
-    private RentingManager rentingManager;
+    private RentalManager rentalManager;
     private Employee currentUser;
 
 
-    public RentingManagerGui(CarManager carManager, CustomerManager customerManager, RentingManager rentingManager,Employee currentUser) {
+    public RentalManagerGui(CarManager carManager, CustomerManager customerManager, RentalManager rentalManager, Employee currentUser) {
 
-        JFrame parentFrame = new JFrame("Welcome to Renting Manager");
+        JFrame parentFrame = new JFrame("Welcome to Rental Manager");
         parentFrame.setSize(900, 400);
-        parentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        parentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         parentFrame.setLayout(new FlowLayout());
 
         this.carManager = carManager;
         this.customerManager = customerManager;
-        this.rentingManager = rentingManager;
+        this.rentalManager = rentalManager;
         this.currentUser = currentUser;
 
-        JPanel panel = new JPanel(new GridLayout(2, 2, 20, 20));
+        JPanel panel = new JPanel(new GridLayout(4, 1, 20, 20));
         parentFrame.add(panel);
 
         // NEW RENTING BUTTON-----------------------------------------------
-        JButton newRentingButton = new JButton("New Renting");
+        JButton newRentingButton = new JButton("New Rental");
         panel.add(newRentingButton);
 
         newRentingButton.addActionListener(e -> {
-            JDialog newRentDialog = new JDialog(parentFrame, "New Renting", true);
+            JDialog newRentDialog = new JDialog(parentFrame, "New Rental", true);
             newRentDialog.setLayout(new BorderLayout());
             newRentDialog.setLocationRelativeTo(parentFrame);
 
@@ -91,8 +91,8 @@ public class RentingManagerGui {
 
                 Customer customer = customerManager.searchByAfm(afm);
 
-                Renting renting = new Renting("R" + System.currentTimeMillis(), car, customer, startDate, endDate, currentUser);
-                if (rentingManager.rentCar(renting)) {
+                Rental rental = new Rental("R" + System.currentTimeMillis(), car, customer, startDate, endDate, currentUser);
+                if (rentalManager.rentCar(rental)) {
                     JOptionPane.showMessageDialog(newRentDialog, "Car rented successfully!");
                     newRentDialog.dispose();
                 } else {
@@ -104,10 +104,10 @@ public class RentingManagerGui {
             newRentDialog.setVisible(true);
         });
 
+
         // RETURN CAR BUTTON------------------------------------------------------
         JButton returnCarButton = new JButton("Return Car");
         panel.add(returnCarButton);
-
         returnCarButton.addActionListener(e -> {
             JDialog returnDialog = new JDialog(parentFrame, "Return Car", true);
             returnDialog.setLayout(new BorderLayout());
@@ -133,23 +133,20 @@ public class RentingManagerGui {
                 String code = rentalCodeField.getText().trim();
                 if (code.isEmpty()) {
                     JOptionPane.showMessageDialog(returnDialog, "Rental code cannot be empty!");
-                    return;
-                }
+                    return;}
 
-                Renting foundRenting = null;
-                for (Renting r : rentingManager.getAllRentings()) {
+                Rental foundRental = null;
+                for (Rental r : rentalManager.getAllRentings()) {
                     if (r.getCode().equals(code)) {
-                        foundRenting = r;
-                        break;
-                    }
+                        foundRental = r;
+                        break;}
                 }
 
-                if (foundRenting == null) {
+                if (foundRental == null) {
                     JOptionPane.showMessageDialog(returnDialog, "Rental with code " + code + " not found!");
-                    return;
-                }
+                    return;}
 
-                if (rentingManager.returnCar(foundRenting)) {
+                if (rentalManager.returnCar(foundRental)) {
                     JOptionPane.showMessageDialog(returnDialog, "Car returned successfully!");
                     returnDialog.dispose();
                 } else {
@@ -160,6 +157,7 @@ public class RentingManagerGui {
             returnDialog.pack();
             returnDialog.setVisible(true);
         });
+
 
         // VIEW CUSTOMER RENTALS-----------------------------------------
         JButton viewCustomerRentalsButton = new JButton("View Customer Rentals");
@@ -198,7 +196,7 @@ public class RentingManagerGui {
                     JOptionPane.showMessageDialog(dialog, "Customer with AFM " + afm + " not found!");
                     return;
                 }
-                ArrayList<Renting> rentals = rentingManager.CustomerRentings(customer);
+                ArrayList<Rental> rentals = rentalManager.CustomerRentings(customer);
 
                 dialog.dispose();
 
@@ -215,7 +213,7 @@ public class RentingManagerGui {
                     String[] columnNames = {"Rental ID", "Car Plate", "Start Date", "End Date", "Status"};
                     Object[][] data = new Object[rentals.size()][5];
                     for (int i = 0; i < rentals.size(); i++) {
-                        Renting r = rentals.get(i);
+                        Rental r = rentals.get(i);
                         data[i][0] = r.getCode();
                         data[i][1] = r.getCar().getPlate();
                         data[i][2] = r.getStartDate();
@@ -277,7 +275,7 @@ public class RentingManagerGui {
                     return;
                 }
 
-                ArrayList<Renting> rentals = rentingManager.CarRentings(car);
+                ArrayList<Rental> rentals = rentalManager.CarRentings(car);
                 dialog.dispose();
 
                 JDialog resultsDialog = new JDialog(parentFrame, "Car Rentals", true);
@@ -293,7 +291,7 @@ public class RentingManagerGui {
                     String[] columnNames = {"Rental ID", "Customer AFM", "Start Date", "End Date", "Status"};
                     Object[][] data = new Object[rentals.size()][5];
                     for (int i = 0; i < rentals.size(); i++) {
-                        Renting r = rentals.get(i);
+                        Rental r = rentals.get(i);
                         data[i][0] = r.getCode();
                         data[i][1] = r.getCustomer().getAfm();
                         data[i][2] = r.getStartDate();
@@ -316,6 +314,10 @@ public class RentingManagerGui {
             dialog.pack();
             dialog.setVisible(true);
         });
+
+
+
+
 
         parentFrame.setVisible(true);
     }}

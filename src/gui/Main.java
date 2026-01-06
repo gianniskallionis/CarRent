@@ -20,7 +20,7 @@ public class Main {
         EmployeeManager employeeManager = fileManager.readEmployees();
         CarManager carManager = fileManager.readVehicles();
         CustomerManager customerManager = fileManager.readCustomers();
-        RentingManager rentingManager = fileManager.readRentals(
+        RentalManager rentalManager = fileManager.readRentals(
                 carManager, customerManager, employeeManager);
 
 

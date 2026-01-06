@@ -165,9 +165,9 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     }
 
-    public RentingManager readRentals(CarManager carManager,CustomerManager customerManager,EmployeeManager employeeManager) {
+    public RentalManager readRentals(CarManager carManager, CustomerManager customerManager, EmployeeManager employeeManager) {
 
-        RentingManager Rentals=new RentingManager();
+        RentalManager Rentals=new RentalManager();
 
         try (BufferedReader reader=new BufferedReader(new FileReader("rentals.csv"))) {
 
@@ -195,7 +195,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
                         continue;
                     }
 
-                    Renting Rental1=new Renting(code,car,customer,startdate,enddate,employee);
+                    Rental Rental1=new Rental(code,car,customer,startdate,enddate,employee);
 
                     Rentals.addRenting(Rental1);
 
@@ -237,14 +237,14 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
     }
 
-    public void writeRentals(RentingManager rentalsToWrite) {
+    public void writeRentals(RentalManager rentalsToWrite) {
 
         try (BufferedWriter writer=new BufferedWriter(new FileWriter("rentals.csv"))) {
 
             writer.write("code,carPlate,customerAfm,startdate,enddate,employeeUsername");
             writer.newLine();
 
-            for (Renting r:rentalsToWrite.getAllRentings()) {
+            for (Rental r:rentalsToWrite.getAllRentings()) {
 
                 writer.write(r.getCode().trim() + "," + r.getCar().getPlate().trim() + "," + r.getCustomer().getAfm().trim()
                         + "," + r.getStartDate().trim() + "," + r.getEndDate().trim() + "," + r.getEmployee().getUsername().trim());
@@ -311,7 +311,7 @@ catch(IOException e ){System.out.println("Error  Writing in customers.csv");}
 
             System.out.println("Initializing rentals.csv");
 
-            RentingManager RM1=new RentingManager();
+            RentalManager RM1=new RentalManager();
 
             writeRentals(RM1);
 

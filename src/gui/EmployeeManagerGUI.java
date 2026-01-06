@@ -2,47 +2,53 @@ package gui;
 import api.Customer;
 import api.EmployeeManager;
 import api.Employee;
+import api.FileManager;
+
 import javax.swing.*;
 import java.awt.*;
 
 
 public class EmployeeManagerGUI {
+    private FileManager fileManager;
 
-    public EmployeeManagerGUI(EmployeeManager employeeManager1){
+    public EmployeeManagerGUI(EmployeeManager employeeManager1,FileManager fileManager) {
+        this.fileManager=fileManager;
         JFrame ParentFrame = new JFrame("Welcome to Employee Manager ");
-        ParentFrame.setSize(800,400);
-        ParentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ParentFrame.setSize(800, 400);
+        ParentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ParentFrame.setLayout(new FlowLayout());
-        JPanel panel= new JPanel(new GridLayout(2,2));// se auto to panel tha valoume ola ta buttons k to panel sto frame .
-        JButton addUserButton=new JButton("Add User");
-        JButton deleteUserButton= new JButton("Delete User");
-        JButton searchUserButton= new JButton("Search User");
-        JButton cancelButton=new JButton("Cancel");
+        JPanel panel = new JPanel(new GridLayout(2, 2));// se auto to panel tha valoume ola ta buttons k to panel sto frame .
+        JButton addUserButton = new JButton("Add User");
+        JButton deleteUserButton = new JButton("Delete User");
+        JButton searchUserButton = new JButton("Search User");
+        JButton cancelButton = new JButton("Cancel");
         panel.add(addUserButton);
         panel.add(searchUserButton);
         panel.add(deleteUserButton);
         panel.add(cancelButton);
         ParentFrame.add(panel);
-        cancelButton.addActionListener(e1->{ParentFrame.dispose();});
+        cancelButton.addActionListener(e1 -> {
+            ParentFrame.dispose();
+        });
 
         // ADD USER
-        addUserButton.addActionListener(e->{
-            JDialog addUserDialog=new JDialog( ParentFrame ,"Add User", true );
+        addUserButton.addActionListener(e -> {
+            JDialog addUserDialog = new JDialog(ParentFrame, "Add User", true);
             addUserDialog.setLayout(new BorderLayout());// tou dinume layout
             addUserDialog.setLocationRelativeTo(ParentFrame);// to kentrarume sthn mesh tou megalou panel(window)
-            JPanel addUserPanel=new JPanel(new GridLayout(5,2));
+            JPanel addUserPanel = new JPanel(new GridLayout(5, 2));
             addUserDialog.add(addUserPanel, BorderLayout.CENTER);
-            JLabel nameLabel= new JLabel("Name:");
-            JLabel surnameLabel= new JLabel("Surname:");
-            JLabel usernameLabel= new JLabel("Username:");
+            JLabel nameLabel = new JLabel("Name:");
+            JLabel surnameLabel = new JLabel("Surname:");
+            JLabel usernameLabel = new JLabel("Username:");
             JLabel emailLabel = new JLabel("Email:");
-            JLabel passwordLabel=new JLabel("Password:");
+            JLabel passwordLabel = new JLabel("Password:");
 
-            JTextField nameTextField=new JTextField(20);  // me to .getText() pairnw string
-            JTextField surnameTextField= new JTextField(20);
-            JTextField usernameTextField= new JTextField(30);
-            JTextField emailTextField= new JTextField(35);
-            JTextField passwordTextField= new JTextField(30);
+            JTextField nameTextField = new JTextField(20);  // me to .getText() pairnw string
+            JTextField surnameTextField = new JTextField(20);
+            JTextField usernameTextField = new JTextField(30);
+            JTextField emailTextField = new JTextField(35);
+            JTextField passwordTextField = new JTextField(30);
 
 // prwta vazeis ta labels kai meta ta fields , alla 1 label+field thn fora
             addUserPanel.add(nameLabel);
@@ -61,27 +67,35 @@ public class EmployeeManagerGUI {
             addUserPanel.add(passwordTextField);
 
             //  ADD+CANCEL BUTTONS HERE  -----------------------------------------------------
-            JPanel buttonPanel= new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            JButton addButton= new JButton("Add");
-            JButton cancelAddButton=new JButton("Cancel");
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            JButton addButton = new JButton("Add");
+            JButton cancelAddButton = new JButton("Cancel");
 
             buttonPanel.add(addButton);
             buttonPanel.add(cancelAddButton);
-            addUserDialog.add(buttonPanel,BorderLayout.SOUTH);
+            addUserDialog.add(buttonPanel, BorderLayout.SOUTH);
 
-            addButton.addActionListener(e1-> {// creates a new customer with the fields and inserts him into the list of customers
+            addButton.addActionListener(e1 -> {// creates a new customer with the fields and inserts him into the list of customers
                 if (nameTextField.getText().trim().isEmpty() || surnameTextField.getText().trim().isEmpty() ||
-                        usernameTextField.getText().trim().isEmpty()||   emailTextField.getText().trim().isEmpty()
-                ||passwordTextField.getText().trim().isEmpty())
-                {JOptionPane.showMessageDialog(addUserDialog, "name,surname,username,email,password cannot be empty");
-                    return;}
-                Employee emp1=new Employee(nameTextField.getText().trim(),surnameTextField.getText().trim(),usernameTextField.getText().trim(),emailTextField.getText().trim()
-                        ,passwordTextField.getText().trim());
+                        usernameTextField.getText().trim().isEmpty() || emailTextField.getText().trim().isEmpty()
+                        || passwordTextField.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(addUserDialog, "name,surname,username,email,password cannot be empty");
+                    return;
+                }
+                Employee emp1 = new Employee(nameTextField.getText().trim(), surnameTextField.getText().trim(), usernameTextField.getText().trim(), emailTextField.getText().trim()
+                        , passwordTextField.getText().trim());
 
-                if (employeeManager1.addUser(emp1)){addUserDialog.dispose();}
-                else{JOptionPane.showMessageDialog(addUserDialog,"error User hasn't been added");}
+                if (employeeManager1.addUser(emp1)) {
+                    fileManager.writeEmployees(employeeManager1);
+                    addUserDialog.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(addUserDialog, "error User hasn't been added");
+                }
             });
-            cancelAddButton.addActionListener(e2->{  addUserDialog.dispose();  }); // closes the window
+            cancelAddButton.addActionListener(e2 -> {
+                addUserDialog.dispose();
+            }); // closes the window
+            addUserDialog.pack();
             addUserDialog.setVisible(true);
         });
 
@@ -112,60 +126,64 @@ public class EmployeeManagerGUI {
                 if (usernameTextField.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(deleteUserDialog, "Username cannot be empty", "Input Error",
                             JOptionPane.WARNING_MESSAGE);
-                    return;}
-                Employee emp2=  employeeManager1.searchByUsername(usernameTextField.getText().trim());
-                if(emp2==null){JOptionPane.showMessageDialog(deleteUserDialog, "User not found");return;}
+                    return;
+                }
+                Employee emp2 = employeeManager1.searchByUsername(usernameTextField.getText().trim());
+                if (emp2 == null) {
+                    JOptionPane.showMessageDialog(deleteUserDialog, "User not found");
+                    return;
+                }
                 if (employeeManager1.deleteUser(emp2)) {
+                    fileManager.writeEmployees(employeeManager1);
                     JOptionPane.showMessageDialog(deleteUserDialog,
                             "User deleted ");
                     deleteUserDialog.dispose();
                 } else {
                     JOptionPane.showMessageDialog(deleteUserDialog,
-                            "Failed to delete User");}
+                            "Failed to delete User");
+                }
             });
-            cancelDeleteButton.addActionListener(e1 -> {deleteUserDialog.dispose();});
+            cancelDeleteButton.addActionListener(e1 -> {
+                deleteUserDialog.dispose();
+            });
             deleteUserDialog.pack();
             deleteUserDialog.setVisible(true);
         });
 
-// SEARCH USER -----------------------------------------------------------------------------------------------------
-        searchUserButton.addActionListener(e->{
-            JDialog searchDialog= new JDialog(ParentFrame,"choose search type",true);
-            searchDialog.setLayout(new GridLayout(3,1,10,10));
+/// SEARCH USER -----------------------------------------------------------------------------------------------------
+        searchUserButton.addActionListener(e -> {
+            JDialog searchDialog = new JDialog(ParentFrame, "choose search type", true);
+            searchDialog.setLayout(new GridLayout(2, 1, 10, 10));
             searchDialog.setLocationRelativeTo(ParentFrame);
-            JPanel searchButtonsPanel=new JPanel(new GridLayout(4,1,10,10));
-            JButton searchByUsernameButton= new JButton("Search By Username");
-            JButton searchByEmailButton= new JButton("Search By Email");
-            JButton cancel= new JButton("Cancel");
+            JPanel searchButtonsPanel = new JPanel(new GridLayout(4, 1, 10, 10));
+            JButton searchByUsernameButton = new JButton("Search By Username");
+            JButton searchByEmailButton = new JButton("Search By Email");
             searchButtonsPanel.add(searchByUsernameButton);
             searchButtonsPanel.add(searchByEmailButton);
-            searchButtonsPanel.add(cancel);
             searchDialog.add(searchButtonsPanel);
+            searchDialog.setPreferredSize(new Dimension(500, 300));
 
-// SEARCH BY USERNAME -----------------------------------------------------------------------------------------------
+            // --- ADD LISTENERS BEFORE showing the dialog ---
+            // SEARCH BY USERNAME
             searchByUsernameButton.addActionListener(e1 -> {
                 searchDialog.dispose();
                 JDialog searchByUsernameDialog = new JDialog(ParentFrame, "Search By Username", true);
-                JPanel searchByUsernamePanel = new JPanel((new GridLayout(1, 2, 10, 10)));
+                JPanel searchByUsernamePanel = new JPanel(new GridLayout(1, 2, 10, 10));
                 searchByUsernameDialog.setLayout(new BorderLayout());
-                JLabel searchByUsernameLabel = new JLabel(("Enter  Username:"));  // writes enter phone
-                JTextField searchByUsernameField = new JTextField(10); // reads the phone
+                JLabel searchByUsernameLabel = new JLabel("Enter  Username:");
+                JTextField searchByUsernameField = new JTextField(10);
                 searchByUsernamePanel.add(searchByUsernameLabel);
                 searchByUsernamePanel.add(searchByUsernameField);
                 searchByUsernameDialog.add(searchByUsernamePanel, BorderLayout.CENTER);
 
-                // Buttons -----
                 JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 JButton okButton = new JButton("Ok");
-                JButton cancelSearchButton = new JButton(("Cancel"));
+                JButton cancelSearchButton = new JButton("Cancel");
                 buttonPanel.add(okButton);
                 buttonPanel.add(cancelSearchButton);
                 searchByUsernameDialog.add(buttonPanel, BorderLayout.SOUTH);
 
-                // Buttons actions listeners ------
-                cancelSearchButton.addActionListener(e2 -> {
-                    searchByUsernameDialog.dispose();
-                });
+                cancelSearchButton.addActionListener(e2 -> searchByUsernameDialog.dispose());
 
                 okButton.addActionListener(e2 -> {
                     String username = searchByUsernameField.getText().trim();
@@ -177,32 +195,28 @@ public class EmployeeManagerGUI {
                         return;
                     }
 
-                    Employee em1;
-                    em1 = employeeManager1.searchByUsername(username);
+                    Employee em1 = employeeManager1.searchByUsername(username);
 
                     if (em1 == null) {
-                        JOptionPane.showMessageDialog(searchByUsernameDialog, "User not found with given  username");
+                        JOptionPane.showMessageDialog(searchByUsernameDialog, "User not found with given username");
                     } else {
-                        // CustomerFound Form START ----------------------------
                         JDialog UserFoundDialog = new JDialog(ParentFrame, "User Found", true);
+                        UserFoundDialog.setLayout(new BorderLayout());
                         JPanel UserFoundPanel = new JPanel(new GridLayout(5, 2));
-
                         addRowToPanel(UserFoundPanel, "Name:", em1.getName());
                         addRowToPanel(UserFoundPanel, "Surname:", em1.getSurname());
                         addRowToPanel(UserFoundPanel, "Username:", em1.getUsername());
                         addRowToPanel(UserFoundPanel, "Email:", em1.getEmail());
                         addRowToPanel(UserFoundPanel, "Password:", em1.getPassword());
-                        UserFoundDialog.add(UserFoundPanel);
+                        UserFoundDialog.add(UserFoundPanel,BorderLayout.CENTER);
 
-                        // UserFound Buttons START -----------
                         JPanel customerFoundButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                         JButton customerFoundOkButton = new JButton("Ok");
-                        customerFoundOkButton.addActionListener(e3 -> {
-                           UserFoundDialog.dispose();
-                        });
+                        customerFoundOkButton.addActionListener(e3 -> UserFoundDialog.dispose());
                         customerFoundButtonPanel.add(customerFoundOkButton);
-                        UserFoundDialog.add(customerFoundButtonPanel);
+                        UserFoundDialog.add(customerFoundButtonPanel,BorderLayout.SOUTH);
                         UserFoundDialog.pack();
+                        UserFoundDialog.setLocationRelativeTo(ParentFrame);
                         UserFoundDialog.setVisible(true);
                     }
                 });
@@ -211,11 +225,11 @@ public class EmployeeManagerGUI {
                 searchByUsernameDialog.setVisible(true);
             });
 
-//SEARCH BY EMAIL ------------------------------------------------------------------------------------------------
+            // SEARCH BY EMAIL
             searchByEmailButton.addActionListener(e1 -> {
                 searchDialog.dispose();
                 JDialog searchByEmailDialog = new JDialog(ParentFrame, "Search By Email", true);
-                JPanel searchByEmailPanel = new JPanel((new GridLayout(1, 2, 10, 10)));
+                JPanel searchByEmailPanel = new JPanel(new GridLayout(1, 2, 10, 10));
                 searchByEmailDialog.setLayout(new BorderLayout());
                 JLabel searchByEmailLabel = new JLabel("Enter Email:");
                 JTextField searchByEmailField = new JTextField(10);
@@ -223,7 +237,6 @@ public class EmployeeManagerGUI {
                 searchByEmailPanel.add(searchByEmailField);
                 searchByEmailDialog.add(searchByEmailPanel, BorderLayout.CENTER);
 
-                // Buttons -----
                 JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 JButton okButton = new JButton("Ok");
                 JButton cancelSearchButton = new JButton("Cancel");
@@ -231,10 +244,7 @@ public class EmployeeManagerGUI {
                 buttonPanel.add(cancelSearchButton);
                 searchByEmailDialog.add(buttonPanel, BorderLayout.SOUTH);
 
-                // Buttons actions listeners ------
-                cancelSearchButton.addActionListener(e2 -> {
-                    searchByEmailDialog.dispose();
-                });
+                cancelSearchButton.addActionListener(e2 -> searchByEmailDialog.dispose());
 
                 okButton.addActionListener(e2 -> {
                     String email = searchByEmailField.getText().trim();
@@ -249,28 +259,23 @@ public class EmployeeManagerGUI {
                     Employee em1 = employeeManager1.searchByEmail(email);
 
                     if (em1 == null) {
-                        JOptionPane.showMessageDialog(searchByEmailDialog,
-                                "User not found with given email");
+                        JOptionPane.showMessageDialog(searchByEmailDialog, "User not found with given email");
                     } else {
-                        // UserFound Form START ----------------------------
                         JDialog UserFoundDialog = new JDialog(ParentFrame, "User Found", true);
+                        UserFoundDialog.setLayout(new BorderLayout());
                         JPanel UserFoundPanel = new JPanel(new GridLayout(5, 2));
-
                         addRowToPanel(UserFoundPanel, "Name:", em1.getName());
                         addRowToPanel(UserFoundPanel, "Surname:", em1.getSurname());
                         addRowToPanel(UserFoundPanel, "Username:", em1.getUsername());
                         addRowToPanel(UserFoundPanel, "Email:", em1.getEmail());
                         addRowToPanel(UserFoundPanel, "Password:", em1.getPassword());
-                        UserFoundDialog.add(UserFoundPanel);
+                        UserFoundDialog.add(UserFoundPanel,BorderLayout.CENTER);
 
-                        // UserFound Buttons START -----------
                         JPanel userFoundButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                         JButton userFoundOkButton = new JButton("Ok");
-                        userFoundOkButton.addActionListener(e3 -> {
-                            UserFoundDialog.dispose();
-                        });
+                        userFoundOkButton.addActionListener(e3 -> UserFoundDialog.dispose());
                         userFoundButtonPanel.add(userFoundOkButton);
-                        UserFoundDialog.add(userFoundButtonPanel);
+                        UserFoundDialog.add(userFoundButtonPanel,BorderLayout.SOUTH);
                         UserFoundDialog.pack();
                         UserFoundDialog.setVisible(true);
                     }
@@ -280,11 +285,13 @@ public class EmployeeManagerGUI {
                 searchByEmailDialog.setVisible(true);
             });
 
+            // finally show the choice dialog after listeners are attached
+            searchDialog.pack();
+            searchDialog.setVisible(true);
         });
 
-
-    }
-    private void addRowToPanel(JPanel panel, String labelText, String valueText) {  // all methods , outside of constructor
+        ParentFrame.setVisible(true);
+    }private void addRowToPanel(JPanel panel, String labelText, String valueText) {  // all methods , outside of constructor
         panel.add(new JLabel(labelText));
         panel.add(new JLabel(valueText));}
 
