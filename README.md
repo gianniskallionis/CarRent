@@ -17,11 +17,16 @@ The code is split in two packages: api holds the logic and the data classes (Car
 
 Running it
 
-You need a JDK. I developed it in IntelliJ IDEA, so the easiest way is to open the folder and run src/gui/Main.java.
+You need a JDK. The easiest way is to open the folder in IntelliJ IDEA and run src/gui/Main.java.
+
+From the command line, in the project folder:
+
+    javac -d out src/api/*.java src/gui/*.java
+    java -cp out gui.Main
 
 
 On the first run the app creates its CSV files with some sample data. You can log in with jsmith / password1.
-
+_________________________________________________________________________________________________________________________________________________________________________________
 Author
 
 Giannis Kallionakis, Computer Science student
