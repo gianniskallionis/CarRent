@@ -24,4 +24,4 @@ On the first run the app creates its CSV files with some sample data. You can lo
 
 Author
 
-Giannis Kallionis, Computer Science student
+Giannis Kallionakis, Computer Science student
